@@ -14,30 +14,30 @@ const OrganizationSupport = () => {
 
       <BannerSmall variant="small" title="Hỗ trợ tổ chức" />
 
-      <div class="about_page">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-6 col-md-6">
-              <div class="about_image">
+      <div className="about_page">
+        <div className="container">
+          <div className="row">
+            <div className="col-xl-6 col-md-6">
+              <div className="about_image">
                 <img src="/templates/img/about/2.png" alt="" />
               </div>
             </div>
-            <div class="col-xl-6 col-md-6">
-              <div class="about_image">
+            <div className="col-xl-6 col-md-6">
+              <div className="about_image">
                 <img src="/templates/img/about/1.png" alt="" />
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="about_info">
+          <div className="row">
+            <div className="col-xl-12">
+              <div className="about_info">
                 <h3>CC Foundation</h3>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-xl-12 col-md-12">
-              <div class="about_text_info">
+          <div className="row">
+            <div className="col-xl-12 col-md-12">
+              <div className="about_text_info">
                 <p>
                   CC Foundation trực tiếp cung cấp các gói hỗ trợ tài chính cho
                   các tổ chức có sáng kiến/chương trình/dự án mang lại giá trị

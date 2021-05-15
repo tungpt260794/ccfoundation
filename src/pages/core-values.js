@@ -14,23 +14,23 @@ const CoreValues = () => {
 
       <BannerSmall variant="small" title="Giá trị cốt lõi" />
 
-      <div class="about_page">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-6 col-md-6">
-              <div class="about_image">
+      <div className="about_page">
+        <div className="container">
+          <div className="row">
+            <div className="col-xl-6 col-md-6">
+              <div className="about_image">
                 <img src="/templates/img/about/2.png" alt="" />
               </div>
             </div>
-            <div class="col-xl-6 col-md-6">
-              <div class="about_image">
+            <div className="col-xl-6 col-md-6">
+              <div className="about_image">
                 <img src="/templates/img/about/1.png" alt="" />
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-xl-12">
-              <div class="about_info">
+          <div className="row">
+            <div className="col-xl-12">
+              <div className="about_info">
                 <h3>
                   CC Foundation: Minh bạch - Bền vững - Hiệu quả - Lan tỏa -
                   Nhân văn
@@ -38,9 +38,9 @@ const CoreValues = () => {
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-xl-12 col-md-12">
-              <div class="about_text_info">
+          <div className="row">
+            <div className="col-xl-12 col-md-12">
+              <div className="about_text_info">
                 <p>
                   CC Foundation luôn hoạt động minh bạch, đúng luật, mang lại
                   những giá trị phát triển bền vững và hiệu quả cho cả tự nhiên

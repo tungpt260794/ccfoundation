@@ -18,21 +18,21 @@ const Blog = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-8 mb-5 mb-lg-0">
-              <div class="single-post">
-                <div class="feature-img">
+              <div className="single-post">
+                <div className="feature-img">
                   <img
-                    class="img-fluid"
+                    className="img-fluid"
                     src="/templates/img/blog/single_blog_1.png"
                     alt=""
                   />
                 </div>
-                <div class="blog_details">
+                <div className="blog_details">
                   <h2>
                     Thứ hai phân chia từ hình thức cá quái thú làm cho tất cả
                     các biển đều tập hợp chúng tôi nói rằng ông của chúng tôi
                   </h2>
 
-                  <p class="excert">
+                  <p className="excert">
                     Chương trình đào tạo MCSE có những người ủng hộ và những
                     người gièm pha. Một số người không hiểu tại sao bạn phải chi
                     tiền cho chương trình đào tạo khi bạn có thể tự nhận tài
