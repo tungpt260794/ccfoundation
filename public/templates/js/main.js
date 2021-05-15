@@ -14,14 +14,14 @@
 
   $(document).ready(function () {
     // mobile_menu
-    var menu = $("ul#navigation");
-    if (menu.length) {
-      menu.slicknav({
-        prependTo: ".mobile_menu",
-        closedSymbol: "+",
-        openedSymbol: "-",
-      });
-    }
+    // var menu = $("ul#navigation");
+    // if (menu.length) {
+    //   menu.slicknav({
+    //     prependTo: ".mobile_menu",
+    //     closedSymbol: "+",
+    //     openedSymbol: "-",
+    //   });
+    // }
     // blog-menu
     // $('ul#blog-menu').slicknav({
     //   prependTo: ".blog_menu"
