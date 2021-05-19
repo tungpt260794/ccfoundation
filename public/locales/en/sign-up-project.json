@@ -1,0 +1,17 @@
+{
+  "head-title": "Apply for a grant",
+  "slogan": {
+    "title": "Apply for a grant"
+  },
+  "contact": {
+    "title": "You have an initiative that can create sustainable development values to the community and are in need of financial support, please fill in below form",
+    "input-name-placeholder": "Enter full name",
+    "input-phone-placeholder": "Enter phone number",
+    "input-email-placeholder": "Enter Email",
+    "input-content-placeholder": "Enter content",
+    "btnLabel": "Sign up",
+    "or": "Or contact us at",
+    "name": "CC Foundation",
+    "address": "65 Cam Hoi street, Đong Mac ward, Hai Ba Trung district, Ha Noi city"
+  }
+}

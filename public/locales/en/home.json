@@ -1,0 +1,26 @@
+{
+  "head-title": "Home",
+  "slogan": {
+    "title": "CONNECTING CHANCES",
+    "content": "We work closely with you to help you realize your initiatives/programs/projects that bring sustainable benefits to our community in short, medium and long terms.",
+    "link-label": "Join us"
+  },
+  "activityUpcoming": {
+    "type": "Upcoming"
+  },
+  "aboutUs": {
+    "type": "Who we are",
+    "title": "CC Foundation",
+    "description": "CC Foundation was founded on May 4th 2021 with the primary mission of funding sustainable community development initiatives/programs/projects by individuals and organizations in strict accordance with current rules and regulations.",
+    "link-label": "View more"
+  },
+  "projectsUpcoming": {
+    "type": "Projects",
+    "title": "Ongoing projects",
+    "description": "Our ongoing projects",
+    "link-label": "View more"
+  },
+  "projectUpcoming": {
+    "link-label": "Detail"
+  }
+}

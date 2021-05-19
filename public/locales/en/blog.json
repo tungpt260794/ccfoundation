@@ -1,0 +1,18 @@
+{
+  "head-title": "Blog",
+  "slogan": {
+    "title": "Blog"
+  },
+  "formSearch": {
+    "placeholder": "Enter post title",
+    "btnLabel": "Search"
+  },
+  "categories": {
+    "title": "Categories"
+  },
+  "formSignUpNewsletter": {
+    "title": "Sign up newsletter",
+    "placeholder": "Enter your Email",
+    "btnLabel": "Sign up"
+  }
+}

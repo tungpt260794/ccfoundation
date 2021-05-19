@@ -1,10 +1,13 @@
 import Link from "next/link";
 
-import styles from "styles/Home.module.css";
+import styles from "./BannerBig.module.css";
 
-const BannerBig = ({ title, content, linkHref, linkLabel }) => {
+const BannerBig = ({ title, content, linkHref, linkLabel, backgroundUrl }) => {
   return (
-    <div className="slider_area slider_bg_1 d-flex align-items-center">
+    <div
+      style={{ backgroundImage: `url(${backgroundUrl})` }}
+      className="slider_area slider_bg_1 d-flex align-items-center"
+    >
       <div className="container">
         <div className="row">
           <div className="col-xl-12">

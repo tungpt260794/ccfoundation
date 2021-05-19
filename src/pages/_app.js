@@ -1,9 +1,10 @@
 import "styles/globals.css";
 import "react-multi-carousel/lib/styles.css";
 
-import { useEffect } from "react";
-
 import Head from "next/head";
+
+import { useEffect } from "react";
+import { appWithTranslation } from "next-i18next";
 
 const MyApp = ({ Component, pageProps }) => {
   useEffect(() => {
@@ -15,7 +16,7 @@ const MyApp = ({ Component, pageProps }) => {
         openedSymbol: "-",
       });
     }
-  }, []);
+  });
 
   return (
     <>
@@ -27,4 +28,4 @@ const MyApp = ({ Component, pageProps }) => {
   );
 };
 
-export default MyApp;
+export default appWithTranslation(MyApp);

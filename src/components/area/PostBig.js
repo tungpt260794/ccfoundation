@@ -16,7 +16,9 @@ const PostBig = ({
           <div className="col-xl-6 col-md-6">
             <div className="about_thumb">
               <img src={imgUrl} alt={imgUrl} />
-              <div className="served_over">{contentCenterImg}</div>
+              {contentCenterImg && (
+                <div className="served_over">{contentCenterImg}</div>
+              )}
             </div>
           </div>
           <div className="col-xl-6 col-md-6">

@@ -1,49 +1,41 @@
 import Head from "next/head";
 
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
 import Layout from "components/Layout";
 import BannerSmall from "components/area/BannerSmall";
 
 const History = () => {
+  const { t } = useTranslation("history");
+
   return (
     <Layout>
       <Head>
-        <title>Lịch sử hoạt động</title>
+        <title>{t("head-title")}</title>
         <meta name="description" content="Activity History" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <BannerSmall variant="small" title="Lịch sử hoạt động" />
+      <BannerSmall
+        variant="small"
+        title={t("slogan.title")}
+        backgroundUrl="/images/history-banner.png"
+      />
 
       <div className="about_page">
         <div className="container">
           <div className="row">
-            <div className="col-xl-6 col-md-6">
-              <div className="about_image">
-                <img src="/templates/img/about/2.png" alt="" />
-              </div>
-            </div>
-            <div className="col-xl-6 col-md-6">
-              <div className="about_image">
-                <img src="/templates/img/about/1.png" alt="" />
-              </div>
-            </div>
-          </div>
-          <div className="row">
             <div className="col-xl-12">
               <div className="about_info">
-                <h3>CC Foundation</h3>
+                <h3>{t("post.title")}</h3>
               </div>
             </div>
           </div>
           <div className="row">
             <div className="col-xl-12 col-md-12">
               <div className="about_text_info">
-                <p>
-                  Được thành lập ngày …/5/2021, CC Foundation đã, đang và sẽ
-                  triển khai các chương trình hỗ trợ tài chính cho các cá nhân,
-                  tổ chức có các sáng kiến/chương trình/dự án mang lại giá trị
-                  phát triển bền vững cho cộng đồng.
-                </p>
+                <p>{t("post.content-1")}</p>
               </div>
             </div>
           </div>
@@ -51,6 +43,18 @@ const History = () => {
       </div>
     </Layout>
   );
+};
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, [
+        "header",
+        "footer",
+        "history",
+      ])),
+    },
+  };
 };
 
 export default History;

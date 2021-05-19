@@ -1,0 +1,23 @@
+.multiLang {
+  display: grid;
+  gap: 4px;
+  grid-template-columns: auto auto;
+  width: fit-content;
+  float: right;
+}
+
+.multiLang img {
+  cursor: pointer;
+}
+
+.langUnfocus {
+  opacity: 0.4;
+}
+
+@media (max-width: 990px) {
+  .multiLang {
+    position: absolute;
+    right: 70px;
+    top: -34px;
+  }
+}

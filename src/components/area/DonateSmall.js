@@ -16,14 +16,18 @@ const DonateSmall = ({
       <div className="help_content">
         <h3>{title}</h3>
         <div className="donate_amount d-flex">
-          <div className="single_amount">
-            <span>Mục Tiêu:</span>
-            <h3>{target}</h3>
-          </div>
-          <div className="single_amount">
-            <span>Đã Quyên Góp:</span>
-            <h3>{raised}</h3>
-          </div>
+          {target && (
+            <div className="single_amount">
+              <span>Mục Tiêu:</span>
+              <h3>{target}</h3>
+            </div>
+          )}
+          {raised && (
+            <div className="single_amount">
+              <span>Đã Quyên Góp:</span>
+              <h3>{raised}</h3>
+            </div>
+          )}
         </div>
         {linkHref && linkLabel && (
           <Link href={linkHref}>

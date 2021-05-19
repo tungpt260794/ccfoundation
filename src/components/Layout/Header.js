@@ -1,87 +1,95 @@
-import { useMemo } from "react";
-
 import Link from "next/link";
+import { useRouter } from "next/router";
+
+import { useMemo } from "react";
+import { useTranslation } from "next-i18next";
+import classnames from "classnames";
+
+import styles from "./Header.module.css";
 
 const Header = () => {
+  const { t } = useTranslation("header");
+  const router = useRouter();
+
   const menuItems = useMemo(
     () => [
       {
-        label: "Trang chủ",
+        label: t("home-page"),
         link: "/",
       },
       {
-        label: "Giới thiệu",
+        label: t("introduce"),
         link: "#",
         subs: [
           {
-            label: "Về chúng tôi",
+            label: t("about-us"),
             link: "/about",
           },
           {
-            label: "Tầm nhìn",
+            label: t("vision"),
             link: "/vision",
           },
           {
-            label: "Sứ mệnh",
+            label: t("mission"),
             link: "/mission",
           },
           {
-            label: "Giá trị cốt lõi",
+            label: t("core-values"),
             link: "/core-values",
           },
           {
-            label: "Lịch sử hoạt động",
+            label: t("activity-history"),
             link: "/history",
           },
         ],
       },
       {
-        label: "Hoạt động",
+        label: t("activity"),
         link: "#",
         subs: [
           {
-            label: "Hỗ trợ cá nhân",
+            label: t("personal-support"),
             link: "/personal-support",
           },
           {
-            label: "Hỗ trợ tổ chức",
+            label: t("organization-support"),
             link: "/organization-support",
           },
         ],
       },
       {
-        label: "Tin tức",
+        label: t("news"),
         link: "#",
         subs: [
           {
-            label: "Blogs",
+            label: t("blogs"),
             link: "/blogs",
           },
           {
-            label: "Các dự án đã hoàn thành",
+            label: t("projects-complete"),
             link: "/projects-complete",
           },
           {
-            label: "Các dự án sắp triển khai",
+            label: t("projects-upcoming"),
             link: "/projects-upcoming",
           },
         ],
       },
       {
-        label: "Kết nối",
+        label: t("connect"),
         link: "#",
         subs: [
           {
-            label: "Liên hệ",
-            link: "#",
+            label: t("contact"),
+            link: "/contact",
           },
           {
-            label: "Trở thành tình nguyện viên",
-            link: "#",
+            label: t("become-volunteer"),
+            link: "/become-volunteer",
           },
           {
-            label: "Đăng ký dự án",
-            link: "#",
+            label: t("sign-up-project"),
+            link: "/sign-up-project",
           },
         ],
       },
@@ -136,11 +144,34 @@ const Header = () => {
                   </nav>
                 </div>
               </div>
-              <div className="col-xl-3 col-lg-3 d-none d-lg-block">
-                <div className="donate_now">
-                  <a href="#" className="boxed-btn">
-                    ĐÓNG GÓP
-                  </a>
+              <div className="col-xl-3 col-lg-3">
+                <div className={styles.multiLang}>
+                  <img
+                    src="/images/vi-flag.png"
+                    alt="/images/vi-flag.png"
+                    width="24px"
+                    className={classnames({
+                      [styles.langUnfocus]: router.locale === "en",
+                    })}
+                    onClick={() => {
+                      router.replace(router.asPath, router.asPath, {
+                        locale: "vi",
+                      });
+                    }}
+                  />
+                  <img
+                    src="/images/en-flag.png"
+                    alt="/images/en-flag.png"
+                    width="24px"
+                    className={classnames({
+                      [styles.langUnfocus]: router.locale === "vi",
+                    })}
+                    onClick={() => {
+                      router.replace(router.asPath, router.asPath, {
+                        locale: "en",
+                      });
+                    }}
+                  />
                 </div>
               </div>
               <div className="col-12">

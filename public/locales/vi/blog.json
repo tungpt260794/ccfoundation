@@ -1,0 +1,18 @@
+{
+  "head-title": "Blog",
+  "slogan": {
+    "title": "Blog"
+  },
+  "formSearch": {
+    "placeholder": "Nhập tên bài viết",
+    "btnLabel": "Tìm kiếm"
+  },
+  "categories": {
+    "title": "Thể loại"
+  },
+  "formSignUpNewsletter": {
+    "title": "Đăng ký bản tin",
+    "placeholder": "Nhập Email của bạn",
+    "btnLabel": "Đăng ký"
+  }
+}

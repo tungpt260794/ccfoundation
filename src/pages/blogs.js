@@ -1,20 +1,32 @@
 import Head from "next/head";
+import Link from "next/link";
+
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import Layout from "components/Layout";
 import BannerSmall from "components/area/BannerSmall";
 import Blog from "components/area/Blog";
 import Paging from "components/area/Paging";
+import InputSimple from "components/FormControl/InputSimple";
+import ButtonSimple from "components/FormControl/ButtonSimple";
 
 const Blogs = () => {
+  const { t } = useTranslation("blogs");
+
   return (
     <Layout>
       <Head>
-        <title>Blogs</title>
+        <title>{t("head-title")}</title>
         <meta name="description" content="Blogs" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <BannerSmall variant="small" title="Blogs" />
+      <BannerSmall
+        variant="small"
+        title={t("slogan.title")}
+        backgroundUrl="/images/blogs-banner.png"
+      />
 
       <section className="blog_area section-padding">
         <div className="container">
@@ -51,69 +63,77 @@ const Blogs = () => {
                 <Paging />
               </div>
             </div>
+
             <div className="col-lg-4">
               <div className="blog_right_sidebar">
                 <aside className="single_sidebar_widget search_widget">
                   <form action="#">
                     <div className="form-group">
                       <div className="input-group mb-3">
-                        <input
+                        <InputSimple
                           type="text"
-                          className="form-control"
-                          placeholder="Nhập tên bài viết"
+                          placeholder={t("formSearch.placeholder")}
+                          icon={<i className="ti-search"></i>}
+                          onChange={(e) => {
+                            console.log(e.target.value);
+                          }}
                         />
-                        <div className="input-group-append">
-                          <button className="btn" type="button">
-                            <i className="ti-search"></i>
-                          </button>
-                        </div>
                       </div>
                     </div>
-                    <button
-                      className="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                      type="submit"
-                    >
-                      Tìm kiếm
-                    </button>
+                    <ButtonSimple
+                      type="button"
+                      label={t("formSearch.btnLabel")}
+                      onClick={() => {
+                        console.log("clicked");
+                      }}
+                    />
                   </form>
                 </aside>
 
                 <aside className="single_sidebar_widget post_category_widget">
-                  <h4 className="widget_title">Thể loại</h4>
+                  <h4 className="widget_title">{t("categories.title")}</h4>
                   <ul className="list cat-list">
                     <li>
-                      <a href="#" className="d-flex">
-                        <p>Dự án</p>
-                        <p>(37)</p>
-                      </a>
+                      <Link href="#">
+                        <a className="d-flex">
+                          <p>Dự án</p>
+                          <p>(37)</p>
+                        </a>
+                      </Link>
                     </li>
                     <li>
-                      <a href="#" className="d-flex">
-                        <p>Tin tức</p>
-                        <p>(10)</p>
-                      </a>
+                      <Link href="#">
+                        <a className="d-flex">
+                          <p>Tin tức</p>
+                          <p>(10)</p>
+                        </a>
+                      </Link>
                     </li>
                   </ul>
                 </aside>
 
                 <aside className="single_sidebar_widget newsletter_widget">
-                  <h4 className="widget_title">Đăng ký bản tin</h4>
+                  <h4 className="widget_title">
+                    {t("formSignUpNewsletter.title")}
+                  </h4>
 
                   <form action="#">
                     <div className="form-group">
-                      <input
-                        type="email"
-                        className="form-control"
-                        placeholder="Nhập email của bạn"
-                        required
+                      <InputSimple
+                        type="text"
+                        placeholder={t("formSignUpNewsletter.placeholder")}
+                        onChange={(e) => {
+                          console.log(e.target.value);
+                        }}
                       />
                     </div>
-                    <button
-                      className="button rounded-0 primary-bg text-white w-100 btn_1 boxed-btn"
-                      type="submit"
-                    >
-                      Đăng ký
-                    </button>
+                    <ButtonSimple
+                      type="button"
+                      label={t("formSignUpNewsletter.btnLabel")}
+                      onClick={() => {
+                        console.log("clicked");
+                      }}
+                    />
                   </form>
                 </aside>
               </div>
@@ -123,6 +143,14 @@ const Blogs = () => {
       </section>
     </Layout>
   );
+};
+
+export const getStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ["header", "footer", "blogs"])),
+    },
+  };
 };
 
 export default Blogs;

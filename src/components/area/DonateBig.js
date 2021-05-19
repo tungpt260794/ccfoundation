@@ -23,14 +23,18 @@ const DonateBig = ({
               </div>
               <p>{content}</p>
               <div className="target_rais_area d-flex">
-                <div className="single_raise">
-                  <span>Mục tiêu :</span>
-                  <h4>{target}</h4>
-                </div>
-                <div className="single_raise">
-                  <span>Đã quyên góp :</span>
-                  <h4>{raised}</h4>
-                </div>
+                {target && (
+                  <div className="single_raise">
+                    <span>Mục tiêu :</span>
+                    <h4>{target}</h4>
+                  </div>
+                )}
+                {raised && (
+                  <div className="single_raise">
+                    <span>Đã quyên góp :</span>
+                    <h4>{raised}</h4>
+                  </div>
+                )}
                 <div className="doante_btn">
                   {linkHref && linkLabel && (
                     <Link href={linkHref}>
@@ -44,22 +48,24 @@ const DonateBig = ({
           <div className="col-xl-6 col-md-6">
             <div className="causes_thumb">
               <img className="img-fluid" src={imgUrl} alt={imgUrl} />
-              <div className="custom_progress_bar">
-                <div className="progress">
-                  <div
-                    className="progress-bar wow slideInLeft"
-                    role="progressbar"
-                    aria-valuenow={progressValueNow}
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    style={{ width: `${progressValueNow}%` }}
-                  >
-                    <div className="value_progress">
-                      <span>{progressValueNow}%</span>
+              {progressValueNow && (
+                <div className="custom_progress_bar">
+                  <div className="progress">
+                    <div
+                      className="progress-bar wow slideInLeft"
+                      role="progressbar"
+                      aria-valuenow={progressValueNow}
+                      aria-valuemin="0"
+                      aria-valuemax="100"
+                      style={{ width: `${progressValueNow}%` }}
+                    >
+                      <div className="value_progress">
+                        <span>{progressValueNow}%</span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

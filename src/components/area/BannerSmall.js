@@ -1,6 +1,9 @@
-const BannerSmall = ({ title }) => {
+const BannerSmall = ({ title, backgroundUrl }) => {
   return (
-    <div className="breadcam_area bradcam_bg">
+    <div
+      style={{ backgroundImage: `url(${backgroundUrl})` }}
+      className="breadcam_area bradcam_bg"
+    >
       <div className="container">
         <div className="row">
           <div className="col-xl-12">

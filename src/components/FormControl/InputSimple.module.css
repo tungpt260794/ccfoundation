@@ -1,0 +1,22 @@
+.inputWrapper {
+  border: 1px solid #ced4da;
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  width: 100%;
+  height: fit-content;
+}
+
+.inputWrapper input {
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 10px 20px 10px 20px;
+}
+
+.inputWrapper i {
+  width: fit-content;
+  height: fit-content;
+  padding: 0 10px;
+  color: #999999;
+}
