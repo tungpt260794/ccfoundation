@@ -1,3 +1,7 @@
+* {
+  font-family: "Roboto", sans-serif !important;
+}
+
 .carousel-item-padding-40-px {
   padding: 0 10px;
 }

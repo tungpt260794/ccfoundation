@@ -605,7 +605,7 @@ h3 {
   left: 0;
   top: 140%;
   background: #fff;
-  width: 200px;
+  width: 225px;
   z-index: 2;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.02);
   opacity: 0;
@@ -707,7 +707,7 @@ h3 {
   height: 1000px;
   position: relative;
   z-index: 8;
-  height: 1000px;
+  height: 700px;
   position: relative;
   z-index: 8;
   background-repeat: no-repeat;
@@ -715,17 +715,17 @@ h3 {
 }
 @media (max-width: 767px) {
   .slider_area {
-    height: 800px;
+    height: 700px;
   }
 }
 @media (min-width: 768px) and (max-width: 991px) {
   .slider_area {
-    height: 800px;
+    height: 700px;
   }
 }
 @media (min-width: 992px) and (max-width: 1200px) {
   .slider_area {
-    height: 800px;
+    height: 700px;
   }
 }
 .slider_area::before {
@@ -1426,9 +1426,10 @@ h3 {
   background-image: url(../img/volunteers/bg.png);
 }
 .become_volunter {
-  padding: 185px 0;
+  padding: 75px 0;
   background-size: cover;
   background-position: left top;
+  min-height: 550px;
 }
 @media (max-width: 767px) {
   .become_volunter {
@@ -1748,6 +1749,7 @@ h3 {
   z-index: 99;
   font-family: "Playfair Display", serif;
 }
+
 @media (max-width: 767px) {
   .breadcam_area .breadcam_text h3 {
     font-size: 30px;
@@ -3493,9 +3495,9 @@ h6 {
   font-size: 13px;
 }
 .blog-pagination .page-item.active .page-link {
-  background-color: #fbf9ff;
+  background-color: #450000;
   border-color: #f0e9ff;
-  color: #888888;
+  color: #f0e9ff !important;
 }
 .blog-pagination .page-item:last-child .page-link {
   margin-right: 0;

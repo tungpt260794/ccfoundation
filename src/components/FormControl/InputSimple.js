@@ -1,9 +1,14 @@
 import styles from "./InputSimple.module.css";
 
-const InputSimple = ({ type, placeholder, onChange, icon }) => {
+const InputSimple = ({ type, placeholder, onChange, icon, value }) => {
   return (
     <div className={styles.inputWrapper}>
-      <input type={type} placeholder={placeholder} onChange={onChange} />
+      <input
+        value={value}
+        type={type}
+        placeholder={placeholder}
+        onChange={onChange}
+      />
       {icon}
     </div>
   );

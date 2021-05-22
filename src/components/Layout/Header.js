@@ -63,7 +63,7 @@ const Header = () => {
         subs: [
           {
             label: t("blogs"),
-            link: "/blogs",
+            link: "/blogs?page=1",
           },
           {
             label: t("projects-complete"),
@@ -107,7 +107,7 @@ const Header = () => {
                 <div className="logo-img">
                   <Link href="/">
                     <a>
-                      <img src="/images/logo.png" alt="" width="100px" />
+                      <img src="/images/logo.png" alt="" width="130px" />
                     </a>
                   </Link>
                 </div>

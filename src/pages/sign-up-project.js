@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import classnames from "classnames";
+import { useState } from "react";
 
 import Layout from "components/Layout";
 import BannerSmall from "components/area/BannerSmall";
@@ -10,10 +11,13 @@ import InputSimple from "components/FormControl/InputSimple";
 import TextareaSimple from "components/FormControl/TextareaSimple";
 import ButtonSimple from "components/FormControl/ButtonSimple";
 
+import { mutateCreateGrantApplication } from "utils/hooks";
+
 import styles from "styles/SignUpProject.module.css";
 
 const SignUpProject = () => {
   const { t } = useTranslation("sign-up-project");
+  const [values, setValues] = useState({});
 
   return (
     <Layout>
@@ -46,37 +50,47 @@ const SignUpProject = () => {
               })}
             >
               <InputSimple
+                name="fullName"
+                value={values.fullName || ""}
                 type="text"
                 placeholder={t("contact.input-name-placeholder")}
                 onChange={(e) => {
-                  console.log(e.target.value);
+                  setValues((prev) => ({ ...prev, fullName: e.target.value }));
                 }}
               />
               <InputSimple
+                name="phone"
+                value={values.phone || ""}
                 type="text"
                 placeholder={t("contact.input-phone-placeholder")}
                 onChange={(e) => {
-                  console.log(e.target.value);
+                  setValues((prev) => ({ ...prev, phone: e.target.value }));
                 }}
               />
               <InputSimple
+                name="email"
+                value={values.email || ""}
                 type="text"
                 placeholder={t("contact.input-email-placeholder")}
                 onChange={(e) => {
-                  console.log(e.target.value);
+                  setValues((prev) => ({ ...prev, email: e.target.value }));
                 }}
               />
               <TextareaSimple
+                name="content"
+                value={values.content || ""}
                 placeholder={t("contact.input-content-placeholder")}
                 onChange={(e) => {
-                  console.log(e.target.value);
+                  setValues((prev) => ({ ...prev, content: e.target.value }));
                 }}
               />
               <ButtonSimple
                 type="button"
                 label={t("contact.btnLabel")}
-                onClick={() => {
-                  console.log("clicked");
+                onClick={async () => {
+                  await mutateCreateGrantApplication({ body: values });
+                  alert("Đăng ký thành công");
+                  setValues({});
                 }}
               />
             </div>

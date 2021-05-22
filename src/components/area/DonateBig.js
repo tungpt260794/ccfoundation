@@ -21,7 +21,7 @@ const DonateBig = ({
                 <span>{type}</span>
                 <h3>{title}</h3>
               </div>
-              <p>{content}</p>
+              <div>{content}</div>
               <div className="target_rais_area d-flex">
                 {target && (
                   <div className="single_raise">

@@ -14,7 +14,7 @@ const DonateSmall = ({
         <img src={imgUrl} alt={imgUrl} />
       </div>
       <div className="help_content">
-        <h3>{title}</h3>
+        {title && <h3 style={{ textAlign: "center" }}>{title}</h3>}
         <div className="donate_amount d-flex">
           {target && (
             <div className="single_amount">
@@ -31,7 +31,7 @@ const DonateSmall = ({
         </div>
         {linkHref && linkLabel && (
           <Link href={linkHref}>
-            <a className="boxed-btn4 ">{linkLabel}</a>
+            <a className="boxed-btn4">{linkLabel}</a>
           </Link>
         )}
       </div>

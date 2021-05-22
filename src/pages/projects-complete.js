@@ -1,14 +1,60 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import axios from "axios";
 
 import Layout from "components/Layout";
 import BannerSmall from "components/area/BannerSmall";
 import DonateSmall from "components/area/DonateSmall";
+import Paging from "components/area/Paging";
 
-const ProjectsComplete = () => {
+import appendFullStrapiUrl from "utils/helpers/appendFullStrapiUrl";
+import { useProjects, useProjectsCount } from "utils/hooks";
+import {
+  PROJECTS_PAGE_LIMIT,
+  ENPOINT_FIND_PROJECTS,
+  ENPOINT_COUNT_PROJECTS,
+} from "utils/helpers/const";
+
+const ProjectsComplete = ({ projectsDataServer, projectsCountDataServer }) => {
   const { t } = useTranslation("projects-complete");
+  const router = useRouter();
+  const { projectsData } = useProjects({
+    initialData: projectsDataServer,
+    query: router.query.title
+      ? {
+          _start:
+            (Number(router.query.page) || 1) * PROJECTS_PAGE_LIMIT -
+            PROJECTS_PAGE_LIMIT,
+          _limit: PROJECTS_PAGE_LIMIT,
+          _locale: router.locale,
+          completed: true,
+          title: router.query.title,
+        }
+      : {
+          _start:
+            (Number(router.query.page) || 1) * PROJECTS_PAGE_LIMIT -
+            PROJECTS_PAGE_LIMIT,
+          _limit: PROJECTS_PAGE_LIMIT,
+          _locale: router.locale,
+          completed: true,
+        },
+  });
+  const { projectsCountData } = useProjectsCount({
+    initialData: projectsCountDataServer,
+    query: router.query.title
+      ? {
+          _locale: router.locale,
+          completed: true,
+          title: router.query.title,
+        }
+      : {
+          _locale: router.locale,
+          completed: true,
+        },
+  });
 
   return (
     <Layout>
@@ -27,55 +73,34 @@ const ProjectsComplete = () => {
       <div className="help_area help_area_page ">
         <div className="container">
           <div className="row">
-            <div className="col-xl-4 col-lg-4 col-md-6">
-              <DonateSmall
-                imgUrl="/templates/img/help/1.png"
-                title="Help Yeati to continue her Primary Education"
-                linkHref="/project"
-                linkLabel={t("item.link-label")}
-              />
-            </div>
+            {projectsData && !!projectsData.length && (
+              <>
+                {projectsData.map((pd, i) => (
+                  <div
+                    key={`project${i}`}
+                    className="col-xl-4 col-lg-4 col-md-6"
+                  >
+                    <DonateSmall
+                      imgUrl={appendFullStrapiUrl(pd.image ? pd.image.url : "")}
+                      title={pd.title}
+                      linkHref={`/project/${pd.id}?localizations=${pd.id}-${
+                        pd.locale
+                      }&${pd.localizations
+                        .map((l) => `localizations=${l.id}-${l.locale}`)
+                        .join("&")}`}
+                      linkLabel={t("item.link-label")}
+                    />
+                  </div>
+                ))}
 
-            <div className="col-xl-4 col-lg-4 col-md-6">
-              <DonateSmall
-                imgUrl="/templates/img/help/2.png"
-                title="Help Yeati to continue her Primary Education"
-                linkHref="/project"
-                linkLabel={t("item.link-label")}
-              />
-            </div>
-            <div className="col-xl-4 col-lg-4 col-md-6">
-              <DonateSmall
-                imgUrl="/templates/img/help/3.png"
-                title="Help Yeati to continue her Primary Education"
-                linkHref="/project"
-                linkLabel={t("item.link-label")}
-              />
-            </div>
-            <div className="col-xl-4 col-lg-4 col-md-6">
-              <DonateSmall
-                imgUrl="/templates/img/help/4.png"
-                title="Help Yeati to continue her Primary Education"
-                linkHref="/project"
-                linkLabel={t("item.link-label")}
-              />
-            </div>
-            <div className="col-xl-4 col-lg-4 col-md-6">
-              <DonateSmall
-                imgUrl="/templates/img/help/5.png"
-                title="Help Yeati to continue her Primary Education"
-                linkHref="/project"
-                linkLabel={t("item.link-label")}
-              />
-            </div>
-            <div className="col-xl-4 col-lg-4 col-md-6">
-              <DonateSmall
-                imgUrl="/templates/img/help/6.png"
-                title="Help Yeati to continue her Primary Education"
-                linkHref="/project"
-                linkLabel={t("item.link-label")}
-              />
-            </div>
+                <div className="col-xl-12">
+                  <Paging
+                    count={projectsCountData}
+                    limit={PROJECTS_PAGE_LIMIT}
+                  />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -83,14 +108,55 @@ const ProjectsComplete = () => {
   );
 };
 
-export const getStaticProps = async ({ locale }) => {
+export const getServerSideProps = async (context) => {
+  const projectsDataServer = await axios.get(
+    appendFullStrapiUrl(
+      ENPOINT_FIND_PROJECTS,
+      context.query.title
+        ? {
+            _start:
+              (context.query.page || 1) * PROJECTS_PAGE_LIMIT -
+              PROJECTS_PAGE_LIMIT,
+            _limit: PROJECTS_PAGE_LIMIT,
+            _locale: context.locale,
+            completed: true,
+            title: context.query.title,
+          }
+        : {
+            _start:
+              (context.query.page || 1) * PROJECTS_PAGE_LIMIT -
+              PROJECTS_PAGE_LIMIT,
+            _limit: PROJECTS_PAGE_LIMIT,
+            _locale: context.locale,
+            completed: true,
+          }
+    )
+  );
+  const projectsCountDataServer = await axios.get(
+    appendFullStrapiUrl(
+      ENPOINT_COUNT_PROJECTS,
+      context.query.title
+        ? {
+            _locale: context.locale,
+            completed: true,
+            title: context.query.title,
+          }
+        : {
+            _locale: context.locale,
+            completed: true,
+          }
+    )
+  );
+
   return {
     props: {
-      ...(await serverSideTranslations(locale, [
+      ...(await serverSideTranslations(context.locale, [
         "header",
         "footer",
         "projects-complete",
       ])),
+      projectsDataServer: projectsDataServer.data,
+      projectsCountDataServer: projectsCountDataServer.data,
     },
   };
 };

@@ -5,65 +5,39 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import axios from "axios";
+import ReactMarkdown from "react-markdown";
 import { useState } from "react";
 
 import Layout from "components/Layout";
 import BannerSmall from "components/area/BannerSmall";
-import Blog from "components/area/Blog";
-import Paging from "components/area/Paging";
 import InputSimple from "components/FormControl/InputSimple";
 import ButtonSimple from "components/FormControl/ButtonSimple";
 
 import appendFullStrapiUrl from "utils/helpers/appendFullStrapiUrl";
-import getValueByLocale from "utils/helpers/getValueByLocale";
-import { useBlogs, useBlogsCount } from "utils/hooks";
-import formatDate from "utils/helpers/formatDate";
-import {
-  BLOGS_PAGE_LIMIT,
-  ENPOINT_FIND_BLOGS,
-  ENPOINT_COUNT_BLOGS,
-} from "utils/helpers/const";
+import { ENPOINT_FIND_BLOGS } from "utils/helpers/const";
+import { useBlog } from "utils/hooks";
 
-const Blogs = ({ blogsDataServer, blogsCountDataServer }) => {
-  const { t } = useTranslation("blogs");
+import styles from "./Blog.module.css";
+
+const Blog = ({ blogDataServer, params, localizations }) => {
+  const { t } = useTranslation("blog");
   const [search, setSearch] = useState();
   const router = useRouter();
-  const { blogsData } = useBlogs({
-    initialData: blogsDataServer,
-    query: router.query.title
-      ? {
-          _start:
-            (Number(router.query.page) || 1) * BLOGS_PAGE_LIMIT -
-            BLOGS_PAGE_LIMIT,
-          _limit: BLOGS_PAGE_LIMIT,
-          _locale: router.locale,
-          title: router.query.title,
-        }
-      : {
-          _start:
-            (Number(router.query.page) || 1) * BLOGS_PAGE_LIMIT -
-            BLOGS_PAGE_LIMIT,
-          _limit: BLOGS_PAGE_LIMIT,
-          _locale: router.locale,
-        },
-  });
-  const { blogsCountData } = useBlogsCount({
-    initialData: blogsCountDataServer,
-    query: router.query.title
-      ? {
-          _locale: router.locale,
-          title: router.query.title,
-        }
-      : {
-          _locale: router.locale,
-        },
+  const { blogData } = useBlog({
+    initialData: blogDataServer,
+    params: {
+      id: localizations.find((l) => l.locale === router.locale).id,
+    },
+    query: {
+      _locale: router.locale,
+    },
   });
 
   return (
     <Layout>
       <Head>
         <title>{t("head-title")}</title>
-        <meta name="description" content="Blogs" />
+        <meta name="description" content="Blog" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -77,37 +51,30 @@ const Blogs = ({ blogsDataServer, blogsCountDataServer }) => {
         <div className="container">
           <div className="row">
             <div className="col-lg-8 mb-5 mb-lg-0">
-              {blogsData && !!blogsData.length && (
-                <div className="blog_left_sidebar">
-                  {blogsData.map((bd, i) => (
-                    <Blog
-                      key={`blog${i}`}
-                      imgUrl={appendFullStrapiUrl(bd.image ? bd.image.url : "")}
-                      day={formatDate({
-                        value: bd.updatedAt,
-                        formatStr: "dd",
-                        type: "utc",
-                      })}
-                      month={formatDate({
-                        value: bd.updatedAt,
-                        formatStr: getValueByLocale({ vi: "M", en: "LLL" }),
-                        type: "utc",
-                      })}
-                      blogUrl={`/blog/${bd.id}?localizations=${bd.id}-${
-                        bd.locale
-                      }&${bd.localizations
-                        .map((l) => `localizations=${l.id}-${l.locale}`)
-                        .join("&")}`}
-                      title={bd.title}
-                      description={bd.description}
-                    />
-                  ))}
-
-                  <Paging count={blogsCountData} limit={BLOGS_PAGE_LIMIT} />
+              <div className="single-post">
+                <div className="feature-img">
+                  <img
+                    className="img-fluid"
+                    src={appendFullStrapiUrl(
+                      blogData.image ? blogData.image.url : ""
+                    )}
+                    alt={blogData.image}
+                  />
                 </div>
-              )}
-            </div>
+                <div className="blog_details">
+                  <h2>{blogData.title}</h2>
 
+                  <div className={styles.blogContent}>
+                    <ReactMarkdown>
+                      {blogData.content.replace(
+                        "](",
+                        `](${process.env.NEXT_PUBLIC_STRAPI_DOMAIN_API}`
+                      )}
+                    </ReactMarkdown>
+                  </div>
+                </div>
+              </div>
+            </div>
             <div className="col-lg-4">
               <div className="blog_right_sidebar">
                 <aside className="single_sidebar_widget search_widget">
@@ -126,14 +93,8 @@ const Blogs = ({ blogsDataServer, blogsCountDataServer }) => {
                     label={t("formSearch.btnLabel")}
                     onClick={() => {
                       router.push(
-                        {
-                          path: router.pathname,
-                          query: { page: 1, title: search },
-                        },
-                        {
-                          path: router.pathname,
-                          query: { page: 1, title: search },
-                        },
+                        `/blogs?page=1&title=${search || ""}`,
+                        `/blogs?page=1&title=${search || ""}`,
                         { locale: router.locale }
                       );
                     }}
@@ -196,37 +157,38 @@ const Blogs = ({ blogsDataServer, blogsCountDataServer }) => {
 };
 
 export const getServerSideProps = async (context) => {
-  const blogsDataServer = await axios.get(
-    appendFullStrapiUrl(
-      ENPOINT_FIND_BLOGS,
-      context.query.title
-        ? {
-            _start:
-              (context.query.page || 1) * BLOGS_PAGE_LIMIT - BLOGS_PAGE_LIMIT,
-            _limit: BLOGS_PAGE_LIMIT,
-            _locale: context.locale,
-            title: context.query.title,
-          }
-        : {
-            _start:
-              (context.query.page || 1) * BLOGS_PAGE_LIMIT - BLOGS_PAGE_LIMIT,
-            _limit: BLOGS_PAGE_LIMIT,
-            _locale: context.locale,
-          }
-    )
-  );
-  const blogsCountDataServer = await axios.get(
-    appendFullStrapiUrl(
-      ENPOINT_COUNT_BLOGS,
-      context.query.title
-        ? {
-            _locale: context.locale,
-            title: context.query.title,
-          }
-        : {
-            _locale: context.locale,
-          }
-    )
+  const localizations = Array.isArray(context.query.localizations)
+    ? context.query.localizations.map((l) => {
+        const array = l.split("-");
+        const id = array[0];
+        const locale = array[1];
+
+        return {
+          id,
+          _id: id,
+          locale,
+        };
+      })
+    : (() => {
+        const array = context.query.localizations.split("-");
+        const id = array[0];
+        const locale = array[1];
+
+        return [
+          {
+            id,
+            _id: id,
+            locale,
+          },
+        ];
+      })();
+
+  const localization = localizations.find((l) => l.locale === context.locale);
+
+  const blogDataServer = await axios.get(
+    appendFullStrapiUrl(`${ENPOINT_FIND_BLOGS}/${localization.id}`, {
+      _locale: context.locale,
+    })
   );
 
   return {
@@ -234,12 +196,13 @@ export const getServerSideProps = async (context) => {
       ...(await serverSideTranslations(context.locale, [
         "header",
         "footer",
-        "blogs",
+        "blog",
       ])),
-      blogsDataServer: blogsDataServer.data,
-      blogsCountDataServer: blogsCountDataServer.data,
+      blogDataServer: blogDataServer.data,
+      localizations,
+      params: context.params,
     },
   };
 };
 
-export default Blogs;
+export default Blog;

@@ -30,16 +30,6 @@ const Home = () => {
         linkLabel={t("slogan.link-label")}
       />
 
-      <DonateBig
-        type={t("activityUpcoming.type")}
-        title="Hỗ trợ Nahid cho Bệnh viêm phổi"
-        content="Truyền cảm hứng cho nhân viên và tổ chức để hỗ trợ các hoạt
-                  động mà họ quan tâm. Chúng tôi làm điều này để mang lại nhiều
-                  tài nguyên hơn cho các tổ chức phi lợi nhuận đang thay đổi thế
-                  giới của chúng ta."
-        imgUrl="/templates/img/causes/1.png"
-      />
-
       <PostBig
         imgUrl="/images/home-about-us.png"
         type={t("aboutUs.type")}

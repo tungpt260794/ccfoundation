@@ -13,7 +13,7 @@ const BannerBig = ({ title, content, linkHref, linkLabel, backgroundUrl }) => {
           <div className="col-xl-12">
             <div className="single_slider">
               <div className="slider_text">
-                <h3 className={styles.title}>{title}</h3>
+                <h3>{title}</h3>
                 <p>{content}</p>
                 {linkLabel && linkHref && (
                   <Link href={linkHref}>

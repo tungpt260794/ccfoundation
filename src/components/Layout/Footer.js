@@ -84,7 +84,7 @@ const Footer = () => {
               </Link>
             </li>
             <li>
-              <Link href="/blogs">
+              <Link href="/blogs?page=1">
                 <a>{t("blogs")}</a>
               </Link>
             </li>
@@ -112,21 +112,26 @@ const Footer = () => {
 
   return (
     <>
-      <div className="become_volunter volunter_bg_1">
+      {/* <div
+        style={{ backgroundImage: `url(${backgroundBannerFooterUrl})` }}
+        className="become_volunter volunter_bg_1"
+      >
         <div className="container">
           <div className="row">
             <div className="col-xl-8 offset-xl-2 col-md-10 offset-md-1">
-              <div className="volunter_text text-center">
-                <h3>{t("become-volunteer")}</h3>
-                <p>{t("become-volunteer-content")}</p>
-                <Link href="/become-volunteer">
-                  <a className="boxed-btn4">{t("join-now")}</a>
-                </Link>
-              </div>
+              {showTextBannerFooter && (
+                <div className="volunter_text text-center">
+                  <h3>{t("become-volunteer")}</h3>
+                  <p>{t("become-volunteer-content")}</p>
+                  <Link href="/become-volunteer">
+                    <a className="boxed-btn4">{t("join-now")}</a>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <footer className="footer">
         <div className="footer_top">
           <div className="container">
