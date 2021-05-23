@@ -39,7 +39,7 @@ const Home = () => {
         linkLabel={t("aboutUs.link-label")}
       />
 
-      <SliderSmall
+      {/* <SliderSmall
         type={t("projectsUpcoming.type")}
         title={t("projectsUpcoming.title")}
         description={t("projectsUpcoming.description")}
@@ -59,7 +59,7 @@ const Home = () => {
             linkLabel={t("projectUpcoming.link-label")}
           />,
         ]}
-      />
+      /> */}
     </Layout>
   );
 };

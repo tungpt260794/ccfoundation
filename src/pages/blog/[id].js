@@ -26,7 +26,9 @@ const Blog = ({ blogDataServer, params, localizations }) => {
   const { blogData } = useBlog({
     initialData: blogDataServer,
     params: {
-      id: localizations.find((l) => l.locale === router.locale).id,
+      id: localizations.find((l) => l.locale === router.locale)
+        ? localizations.find((l) => l.locale === router.locale).id
+        : params.id,
     },
     query: {
       _locale: router.locale,
@@ -66,10 +68,11 @@ const Blog = ({ blogDataServer, params, localizations }) => {
 
                   <div className={styles.blogContent}>
                     <ReactMarkdown>
-                      {blogData.content.replace(
-                        "](",
-                        `](${process.env.NEXT_PUBLIC_STRAPI_DOMAIN_API}`
-                      )}
+                      {blogData.content &&
+                        blogData.content.replace(
+                          "](",
+                          `](${process.env.NEXT_PUBLIC_STRAPI_DOMAIN_API}`
+                        )}
                     </ReactMarkdown>
                   </div>
                 </div>
@@ -169,7 +172,8 @@ export const getServerSideProps = async (context) => {
           locale,
         };
       })
-    : (() => {
+    : context.query.localizations
+    ? (() => {
         const array = context.query.localizations.split("-");
         const id = array[0];
         const locale = array[1];
@@ -181,28 +185,49 @@ export const getServerSideProps = async (context) => {
             locale,
           },
         ];
-      })();
+      })()
+    : [];
 
   const localization = localizations.find((l) => l.locale === context.locale);
 
-  const blogDataServer = await axios.get(
-    appendFullStrapiUrl(`${ENPOINT_FIND_BLOGS}/${localization.id}`, {
-      _locale: context.locale,
-    })
-  );
+  try {
+    const blogDataServer = await axios.get(
+      appendFullStrapiUrl(
+        `${ENPOINT_FIND_BLOGS}/${
+          localization ? localization.id : context.params.id
+        }`,
+        {
+          _locale: context.locale,
+        }
+      )
+    );
 
-  return {
-    props: {
-      ...(await serverSideTranslations(context.locale, [
-        "header",
-        "footer",
-        "blog",
-      ])),
-      blogDataServer: blogDataServer.data,
-      localizations,
-      params: context.params,
-    },
-  };
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, [
+          "header",
+          "footer",
+          "blog",
+        ])),
+        blogDataServer: blogDataServer.data,
+        localizations,
+        params: context.params,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, [
+          "header",
+          "footer",
+          "blog",
+        ])),
+        blogDataServer: {},
+        localizations: [],
+        params: context.params,
+      },
+    };
+  }
 };
 
 export default Blog;

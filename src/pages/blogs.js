@@ -196,50 +196,64 @@ const Blogs = ({ blogsDataServer, blogsCountDataServer }) => {
 };
 
 export const getServerSideProps = async (context) => {
-  const blogsDataServer = await axios.get(
-    appendFullStrapiUrl(
-      ENPOINT_FIND_BLOGS,
-      context.query.title
-        ? {
-            _start:
-              (context.query.page || 1) * BLOGS_PAGE_LIMIT - BLOGS_PAGE_LIMIT,
-            _limit: BLOGS_PAGE_LIMIT,
-            _locale: context.locale,
-            title: context.query.title,
-          }
-        : {
-            _start:
-              (context.query.page || 1) * BLOGS_PAGE_LIMIT - BLOGS_PAGE_LIMIT,
-            _limit: BLOGS_PAGE_LIMIT,
-            _locale: context.locale,
-          }
-    )
-  );
-  const blogsCountDataServer = await axios.get(
-    appendFullStrapiUrl(
-      ENPOINT_COUNT_BLOGS,
-      context.query.title
-        ? {
-            _locale: context.locale,
-            title: context.query.title,
-          }
-        : {
-            _locale: context.locale,
-          }
-    )
-  );
+  try {
+    const blogsDataServer = await axios.get(
+      appendFullStrapiUrl(
+        ENPOINT_FIND_BLOGS,
+        context.query.title
+          ? {
+              _start:
+                (context.query.page || 1) * BLOGS_PAGE_LIMIT - BLOGS_PAGE_LIMIT,
+              _limit: BLOGS_PAGE_LIMIT,
+              _locale: context.locale,
+              title: context.query.title,
+            }
+          : {
+              _start:
+                (context.query.page || 1) * BLOGS_PAGE_LIMIT - BLOGS_PAGE_LIMIT,
+              _limit: BLOGS_PAGE_LIMIT,
+              _locale: context.locale,
+            }
+      )
+    );
+    const blogsCountDataServer = await axios.get(
+      appendFullStrapiUrl(
+        ENPOINT_COUNT_BLOGS,
+        context.query.title
+          ? {
+              _locale: context.locale,
+              title: context.query.title,
+            }
+          : {
+              _locale: context.locale,
+            }
+      )
+    );
 
-  return {
-    props: {
-      ...(await serverSideTranslations(context.locale, [
-        "header",
-        "footer",
-        "blogs",
-      ])),
-      blogsDataServer: blogsDataServer.data,
-      blogsCountDataServer: blogsCountDataServer.data,
-    },
-  };
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, [
+          "header",
+          "footer",
+          "blogs",
+        ])),
+        blogsDataServer: blogsDataServer.data,
+        blogsCountDataServer: blogsCountDataServer.data,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, [
+          "header",
+          "footer",
+          "blogs",
+        ])),
+        blogsDataServer: [],
+        blogsCountDataServer: 0,
+      },
+    };
+  }
 };
 
 export default Blogs;

@@ -109,56 +109,70 @@ const ProjectsUpcoming = ({ projectsDataServer, projectsCountDataServer }) => {
 };
 
 export const getServerSideProps = async (context) => {
-  const projectsDataServer = await axios.get(
-    appendFullStrapiUrl(
-      ENPOINT_FIND_PROJECTS,
-      context.query.title
-        ? {
-            _start:
-              (context.query.page || 1) * PROJECTS_PAGE_LIMIT -
-              PROJECTS_PAGE_LIMIT,
-            _limit: PROJECTS_PAGE_LIMIT,
-            _locale: context.locale,
-            completed: false,
-            title: context.query.title,
-          }
-        : {
-            _start:
-              (context.query.page || 1) * PROJECTS_PAGE_LIMIT -
-              PROJECTS_PAGE_LIMIT,
-            _limit: PROJECTS_PAGE_LIMIT,
-            _locale: context.locale,
-            completed: false,
-          }
-    )
-  );
-  const projectsCountDataServer = await axios.get(
-    appendFullStrapiUrl(
-      ENPOINT_COUNT_PROJECTS,
-      context.query.title
-        ? {
-            _locale: context.locale,
-            completed: false,
-            title: context.query.title,
-          }
-        : {
-            _locale: context.locale,
-            completed: false,
-          }
-    )
-  );
+  try {
+    const projectsDataServer = await axios.get(
+      appendFullStrapiUrl(
+        ENPOINT_FIND_PROJECTS,
+        context.query.title
+          ? {
+              _start:
+                (context.query.page || 1) * PROJECTS_PAGE_LIMIT -
+                PROJECTS_PAGE_LIMIT,
+              _limit: PROJECTS_PAGE_LIMIT,
+              _locale: context.locale,
+              completed: false,
+              title: context.query.title,
+            }
+          : {
+              _start:
+                (context.query.page || 1) * PROJECTS_PAGE_LIMIT -
+                PROJECTS_PAGE_LIMIT,
+              _limit: PROJECTS_PAGE_LIMIT,
+              _locale: context.locale,
+              completed: false,
+            }
+      )
+    );
+    const projectsCountDataServer = await axios.get(
+      appendFullStrapiUrl(
+        ENPOINT_COUNT_PROJECTS,
+        context.query.title
+          ? {
+              _locale: context.locale,
+              completed: false,
+              title: context.query.title,
+            }
+          : {
+              _locale: context.locale,
+              completed: false,
+            }
+      )
+    );
 
-  return {
-    props: {
-      ...(await serverSideTranslations(context.locale, [
-        "header",
-        "footer",
-        "projects-upcoming",
-      ])),
-      projectsDataServer: projectsDataServer.data,
-      projectsCountDataServer: projectsCountDataServer.data,
-    },
-  };
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, [
+          "header",
+          "footer",
+          "projects-upcoming",
+        ])),
+        projectsDataServer: projectsDataServer.data,
+        projectsCountDataServer: projectsCountDataServer.data,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, [
+          "header",
+          "footer",
+          "projects-upcoming",
+        ])),
+        projectsDataServer: [],
+        projectsCountDataServer: 0,
+      },
+    };
+  }
 };
 
 export default ProjectsUpcoming;

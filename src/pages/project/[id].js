@@ -16,13 +16,15 @@ import { useProject } from "utils/hooks";
 
 import styles from "./Project.module.css";
 
-const Project = ({ projectDataServer, localizations }) => {
+const Project = ({ projectDataServer, params, localizations }) => {
   const { t } = useTranslation("project");
   const router = useRouter();
   const { projectData } = useProject({
     initialData: projectDataServer,
     params: {
-      id: localizations.find((l) => l.locale === router.locale).id,
+      id: localizations.find((l) => l.locale === router.locale)
+        ? localizations.find((l) => l.locale === router.locale).id
+        : params.id,
     },
     query: {
       _locale: router.locale,
@@ -48,10 +50,11 @@ const Project = ({ projectDataServer, localizations }) => {
         content={
           <div className={styles.projectContent}>
             <ReactMarkdown>
-              {projectData.content.replace(
-                "](",
-                `](${process.env.NEXT_PUBLIC_STRAPI_DOMAIN_API}`
-              )}
+              {projectData.content &&
+                projectData.content.replace(
+                  "](",
+                  `](${process.env.NEXT_PUBLIC_STRAPI_DOMAIN_API}`
+                )}
             </ReactMarkdown>
           </div>
         }
@@ -76,7 +79,8 @@ export const getServerSideProps = async (context) => {
           locale,
         };
       })
-    : (() => {
+    : context.query.localizations
+    ? (() => {
         const array = context.query.localizations.split("-");
         const id = array[0];
         const locale = array[1];
@@ -88,28 +92,49 @@ export const getServerSideProps = async (context) => {
             locale,
           },
         ];
-      })();
+      })()
+    : [];
   const localization = localizations.find((l) => l.locale === context.locale);
   console.log(localizations);
 
-  const projectDataServer = await axios.get(
-    appendFullStrapiUrl(`${ENPOINT_FIND_PROJECTS}/${localization.id}`, {
-      _locale: context.locale,
-    })
-  );
+  try {
+    const projectDataServer = await axios.get(
+      appendFullStrapiUrl(
+        `${ENPOINT_FIND_PROJECTS}/${
+          localization ? localization.id : context.params.id
+        }`,
+        {
+          _locale: context.locale,
+        }
+      )
+    );
 
-  return {
-    props: {
-      ...(await serverSideTranslations(context.locale, [
-        "header",
-        "footer",
-        "project",
-      ])),
-      projectDataServer: projectDataServer.data,
-      localizations,
-      params: context.params,
-    },
-  };
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, [
+          "header",
+          "footer",
+          "project",
+        ])),
+        projectDataServer: projectDataServer.data,
+        localizations,
+        params: context.params,
+      },
+    };
+  } catch (error) {
+    return {
+      props: {
+        ...(await serverSideTranslations(context.locale, [
+          "header",
+          "footer",
+          "project",
+        ])),
+        projectDataServer: {},
+        localizations: [],
+        params: context.params,
+      },
+    };
+  }
 };
 
 export default Project;
