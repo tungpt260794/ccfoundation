@@ -81,7 +81,7 @@ const ProjectsComplete = ({ projectsDataServer, projectsCountDataServer }) => {
                     className="col-xl-4 col-lg-4 col-md-6"
                   >
                     <DonateSmall
-                      imgUrl={appendFullStrapiUrl(pd.image ? pd.image.url : "")}
+                      imgUrl={pd.image ? pd.image.url : ""}
                       title={pd.title}
                       linkHref={`/project/${pd.id}?localizations=${pd.id}-${
                         pd.locale

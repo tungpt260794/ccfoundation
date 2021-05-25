@@ -58,9 +58,7 @@ const Project = ({ projectDataServer, params, localizations }) => {
             </ReactMarkdown>
           </div>
         }
-        imgUrl={appendFullStrapiUrl(
-          projectData.image ? projectData.image.url : ""
-        )}
+        imgUrl={projectData.image ? projectData.image.url : ""}
       />
     </Layout>
   );

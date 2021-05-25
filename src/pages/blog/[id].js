@@ -57,9 +57,7 @@ const Blog = ({ blogDataServer, params, localizations }) => {
                 <div className="feature-img">
                   <img
                     className="img-fluid"
-                    src={appendFullStrapiUrl(
-                      blogData.image ? blogData.image.url : ""
-                    )}
+                    src={blogData.image ? blogData.image.url : ""}
                     alt={blogData.image}
                   />
                 </div>

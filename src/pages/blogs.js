@@ -103,7 +103,7 @@ const Blogs = ({
                   {blogsData.map((bd, i) => (
                     <Blog
                       key={`blog${i}`}
-                      imgUrl={appendFullStrapiUrl(bd.image ? bd.image.url : "")}
+                      imgUrl={bd.image ? bd.image.url : ""}
                       day={formatDate({
                         value: bd.updatedAt,
                         formatStr: "dd",
