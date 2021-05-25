@@ -87,10 +87,18 @@ const Blogs = ({
             <div className="row">
               <h1 style={{ marginBottom: 24 }}>
                 {categoriesData.find((cd) =>
-                  router.query.category.find((c) => c === cd.id)
+                  router.query.category
+                    ? router.query.category.length > 0
+                      ? router.query.category.find((c) => c === cd.id)
+                      : router.query.category === cd.id
+                    : false
                 )
                   ? categoriesData.find((cd) =>
-                      router.query.category.find((c) => c === cd.id)
+                      router.query.category
+                        ? router.query.category.length > 0
+                          ? router.query.category.find((c) => c === cd.id)
+                          : router.query.category === cd.id
+                        : false
                     ).name
                   : ""}
               </h1>
