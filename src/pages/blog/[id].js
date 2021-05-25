@@ -14,12 +14,20 @@ import InputSimple from "components/FormControl/InputSimple";
 import ButtonSimple from "components/FormControl/ButtonSimple";
 
 import appendFullStrapiUrl from "utils/helpers/appendFullStrapiUrl";
-import { ENPOINT_FIND_BLOGS } from "utils/helpers/const";
-import { useBlog } from "utils/hooks";
+import {
+  ENPOINT_FIND_BLOGS,
+  ENPOINT_FIND_CATEGORIES,
+} from "utils/helpers/const";
+import { useBlog, useCategories } from "utils/hooks";
 
 import styles from "./Blog.module.css";
 
-const Blog = ({ blogDataServer, params, localizations }) => {
+const Blog = ({
+  blogDataServer,
+  params,
+  localizations,
+  categoriesDataServer,
+}) => {
   const { t } = useTranslation("blog");
   const [search, setSearch] = useState();
   const router = useRouter();
@@ -30,6 +38,12 @@ const Blog = ({ blogDataServer, params, localizations }) => {
         ? localizations.find((l) => l.locale === router.locale).id
         : params.id,
     },
+    query: {
+      _locale: router.locale,
+    },
+  });
+  const { categoriesData } = useCategories({
+    initialData: categoriesDataServer,
     query: {
       _locale: router.locale,
     },
@@ -104,24 +118,26 @@ const Blog = ({ blogDataServer, params, localizations }) => {
 
                 <aside className="single_sidebar_widget post_category_widget">
                   <h4 className="widget_title">{t("categories.title")}</h4>
-                  <ul className="list cat-list">
-                    <li>
-                      <Link href="#">
-                        <a className="d-flex">
-                          <p>Dự án</p>
-                          <p>(37)</p>
-                        </a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="#">
-                        <a className="d-flex">
-                          <p>Tin tức</p>
-                          <p>(10)</p>
-                        </a>
-                      </Link>
-                    </li>
-                  </ul>
+                  {categoriesData && !!categoriesData.length && (
+                    <ul className="list cat-list">
+                      {categoriesData.map((cd, i) => (
+                        <li key={`category${i}`}>
+                          <Link
+                            href={`/blogs?page=1&category=${
+                              cd.id
+                            }&${cd.localizations
+                              .map((l) => `category=${l.id}`)
+                              .join("&")}`}
+                          >
+                            <a className="d-flex">
+                              <p>{cd.name}</p>
+                              <p>({cd.blogs && cd.blogs.length})</p>
+                            </a>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </aside>
 
                 {/* <aside className="single_sidebar_widget newsletter_widget">
@@ -199,6 +215,11 @@ export const getServerSideProps = async (context) => {
         }
       )
     );
+    const categoriesDataServer = await axios.get(
+      appendFullStrapiUrl(ENPOINT_FIND_CATEGORIES, {
+        _locale: context.locale,
+      })
+    );
 
     return {
       props: {
@@ -210,6 +231,7 @@ export const getServerSideProps = async (context) => {
         blogDataServer: blogDataServer.data,
         localizations,
         params: context.params,
+        categoriesDataServer: categoriesDataServer.data,
       },
     };
   } catch (error) {
@@ -223,6 +245,7 @@ export const getServerSideProps = async (context) => {
         blogDataServer: {},
         localizations: [],
         params: context.params,
+        categoriesDataServer: [],
       },
     };
   }

@@ -287,6 +287,7 @@ export const getServerSideProps = async (context) => {
         ])),
         blogsDataServer: [],
         blogsCountDataServer: 0,
+        categoriesDataServer: [],
       },
     };
   }
