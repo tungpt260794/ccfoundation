@@ -41,6 +41,11 @@ const Vision = () => {
           </div>
         </div>
       </div>
+
+      <div
+        style={{ backgroundImage: `url(/images/vision-banner.png)` }}
+        className="become_volunter volunter_bg_1"
+      ></div>
     </Layout>
   );
 };

@@ -9,6 +9,7 @@ import findBlog from "./findBlog";
 import findProjects from "./findProjects";
 import countProjects from "./countProjects";
 import findProject from "./findProject";
+import findCategories from "./findCategories";
 import createGrantApplication from "./createGrantApplication";
 
 const libs = { useSWR, fetcher, axios };
@@ -24,6 +25,8 @@ export const useProjects = (options = {}) => findProjects(libs, options);
 export const useProjectsCount = (options = {}) => countProjects(libs, options);
 
 export const useProject = (options = {}) => findProject(libs, options);
+
+export const useCategories = (options = {}) => findCategories(libs, options);
 
 export const mutateCreateGrantApplication = (options = {}) =>
   createGrantApplication(libs, options);

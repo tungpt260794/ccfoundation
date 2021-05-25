@@ -146,7 +146,32 @@ const Header = () => {
               </div>
               <div className="col-xl-3 col-lg-3">
                 <div className={styles.multiLang}>
-                  <img
+                  <span
+                    className={classnames({
+                      [styles.langUnfocus]: router.locale === "en",
+                    })}
+                    onClick={() => {
+                      router.replace(router.asPath, router.asPath, {
+                        locale: "vi",
+                      });
+                    }}
+                  >
+                    Tiếng Việt
+                  </span>{" "}
+                  |{" "}
+                  <span
+                    className={classnames({
+                      [styles.langUnfocus]: router.locale === "vi",
+                    })}
+                    onClick={() => {
+                      router.replace(router.asPath, router.asPath, {
+                        locale: "en",
+                      });
+                    }}
+                  >
+                    English
+                  </span>
+                  {/* <img
                     src="/images/vi-flag.png"
                     alt="/images/vi-flag.png"
                     width="24px"
@@ -171,7 +196,7 @@ const Header = () => {
                         locale: "en",
                       });
                     }}
-                  />
+                  /> */}
                 </div>
               </div>
               <div className="col-12">

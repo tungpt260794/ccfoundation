@@ -41,6 +41,13 @@ const OrganizationSupport = () => {
           </div>
         </div>
       </div>
+
+      <div
+        style={{
+          backgroundImage: `url(/images/organization-support-banner.png)`,
+        }}
+        className="become_volunter volunter_bg_1"
+      ></div>
     </Layout>
   );
 };

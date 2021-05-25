@@ -48,7 +48,7 @@ a:hover,
 }
 a,
 button {
-  color: #450000;
+  color: #b00006;
   outline: medium none;
 }
 h1,
@@ -57,7 +57,7 @@ h3,
 h4,
 h5 {
   font-family: "Playfair Display", serif;
-  color: #450000;
+  color: #b00006;
 }
 h1 a,
 h2 a,
@@ -227,24 +227,24 @@ h3 {
 }
 .boxed-btn {
   background: #fff;
-  color: #450000;
+  color: #b00006;
   display: inline-block;
   padding: 12px 24px;
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   font-weight: 400;
   border: 0;
-  border: 1px solid #450000;
+  border: 1px solid #b00006;
   letter-spacing: 3px;
   text-align: center;
-  color: #450000 !important;
+  color: #b00006 !important;
   text-transform: none;
   cursor: pointer;
 }
 .boxed-btn:hover {
-  background: #450000;
+  background: #b00006;
   color: #fff !important;
-  border: 1px solid #450000;
+  border: 1px solid #b00006;
 }
 .boxed-btn:focus {
   outline: none;
@@ -327,7 +327,7 @@ h3 {
   font-size: 46px;
   line-height: 56px;
   font-weight: 400;
-  color: #450000;
+  color: #b00006;
 }
 @media (max-width: 767px) {
   .section_title h3 {
@@ -657,7 +657,7 @@ h3 {
   -webkit-transition: transform 500ms ease, background 500ms ease;
   box-shadow: 0px 3px 16px 0px rgba(0, 0, 0, 0.1);
   padding: 0 150px;
-  background: #450000;
+  background: #b00006;
 }
 @media (max-width: 767px) {
   .header-area .main-header-area.sticky {
@@ -698,7 +698,7 @@ h3 {
 .header-area .donate_now a:hover {
   background: #fff;
   border-color: #fff;
-  color: #450000 !important;
+  color: #b00006 !important;
 }
 .slider_bg_1 {
   background-image: url(../img/banner/1.png);
@@ -731,7 +731,7 @@ h3 {
 .slider_area::before {
   position: absolute;
   content: "";
-  background: #450000;
+  background: #b00006;
   width: 100%;
   height: 100%;
   left: 0;
@@ -996,7 +996,7 @@ h3 {
 }
 .causes_area.causes_area2 .causes_info .section_title h4 {
   font-size: 24px;
-  color: #450000;
+  color: #b00006;
   margin-bottom: 28px;
 }
 .causes_area.causes_area2 .causes_info p {
@@ -1181,7 +1181,7 @@ h3 {
 .servce_area .single_serve h3 {
   font-size: 24px;
   font-weight: 400;
-  color: #450000;
+  color: #b00006;
   margin-top: 24px;
   margin-bottom: 13px;
 }
@@ -1259,7 +1259,7 @@ h3 {
   font-family: "Playfair Display", serif;
   font-weight: 400;
   line-height: 34px;
-  color: #450000;
+  color: #b00006;
 }
 @media (max-width: 767px) {
   .help_area .single_help_wrap h3 {
@@ -1380,9 +1380,9 @@ h3 {
 .volunteers_area .single_volunteer .thumb .social_links::before {
   background-image: linear-gradient(
     to top,
-    #450000 20%,
-    #450000 30%,
-    #450000 70%
+    #b00006 20%,
+    #b00006 30%,
+    #b00006 70%
   );
   width: 100%;
   height: 100%;
@@ -1428,9 +1428,10 @@ h3 {
 .become_volunter {
   padding: 75px 0;
   background-size: cover;
-  background-position: left top;
+  background-position: center;
   min-height: 550px;
 }
+
 @media (max-width: 767px) {
   .become_volunter {
     padding: 100px 0;
@@ -1491,6 +1492,7 @@ h3 {
   z-index: 998;
   margin-top: 0;
   padding-bottom: 100px;
+  padding-top: 100px;
 }
 @media (max-width: 767px) {
   .about_page {
@@ -1524,7 +1526,7 @@ h3 {
 .about_page .about_info h3 {
   font-size: 46px;
   line-height: 56px;
-  color: #450000;
+  color: #b00006;
   margin-top: 0;
   margin-bottom: 25px;
 }
@@ -1558,11 +1560,11 @@ h3 {
   }
 }
 .footer {
-  background: #450000;
+  background: #b00006;
 }
 .footer .footer_top {
-  padding-top: 145px;
-  padding-bottom: 129px;
+  padding-top: 60px;
+  padding-bottom: 30px;
 }
 @media (max-width: 767px) {
   .footer .footer_top {
@@ -1719,7 +1721,7 @@ h3 {
 .breadcam_area::before {
   position: absolute;
   content: "";
-  background: #450000;
+  background: #b00006;
   width: 100%;
   height: 100%;
   left: 0;
@@ -1734,13 +1736,13 @@ h3 {
   height: 115px;
   left: 0;
   bottom: -60px;
-  -webkit-transform: skewY(3deg);
-  -ms-transform: skewY(3deg);
-  transform: skewY(3deg);
+  -webkit-transform: skewY(0deg);
+  -ms-transform: skewY(0deg);
+  transform: skewY(0deg);
   z-index: 99;
 }
 .breadcam_area .breadcam_text h3 {
-  font-size: 60px;
+  font-size: 50px;
   color: #fff;
   font-weight: 700;
   text-transform: none;
@@ -1748,6 +1750,7 @@ h3 {
   line-height: 70px;
   z-index: 99;
   font-family: "Playfair Display", serif;
+  white-space: pre-line;
 }
 
 @media (max-width: 767px) {
@@ -2875,7 +2878,7 @@ h6 {
 }
 .blog_area a:hover,
 .blog_area a :hover {
-  background: -webkit-linear-gradient(131deg, #450000 0%, #450000 99%);
+  background: -webkit-linear-gradient(131deg, #b00006 0%, #b00006 99%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-decoration: none;
@@ -2900,7 +2903,7 @@ h6 {
   top: 0;
   width: 100%;
   height: 100%;
-  background: #450000;
+  background: #b00006;
   opacity: 0;
   -webkit-transition: 0.5s;
   transition: 0.5s;
@@ -3235,7 +3238,7 @@ h6 {
   color: #ff8b23;
 }
 .blog_details a:hover {
-  color: #450000;
+  color: #b00006;
 }
 .blog_details h2 {
   font-size: 18px;
@@ -3283,7 +3286,7 @@ h6 {
   left: 10px;
   display: block;
   color: #fff;
-  background-color: #450000;
+  background-color: #b00006;
   padding: 8px 15px;
   border-radius: 5px;
 }
@@ -3447,7 +3450,7 @@ h6 {
   font-size: 13px;
 }
 .blog_right_sidebar .tag_cloud_widget ul li a:hover {
-  background: #450000;
+  background: #b00006;
   color: #fff !important;
   -webkit-text-fill-color: #fff;
   text-decoration: none;
@@ -3495,7 +3498,7 @@ h6 {
   font-size: 13px;
 }
 .blog-pagination .page-item.active .page-link {
-  background-color: #450000;
+  background-color: #b00006;
   border-color: #f0e9ff;
   color: #f0e9ff !important;
 }
@@ -3622,7 +3625,7 @@ h6 {
   display: inline-block;
 }
 .single-post-area .blog-author a:hover {
-  color: #450000;
+  color: #b00006;
 }
 .single-post-area .blog-author p {
   margin-bottom: 0;
@@ -3917,7 +3920,7 @@ h6 {
   }
 }
 .blog_part .single-home-blog .card .card-body a {
-  color: #450000;
+  color: #b00006;
   text-transform: uppercase;
   -webkit-transition: 0.8s;
   transition: 0.8s;
@@ -3938,7 +3941,7 @@ h6 {
   height: 10px;
   top: 5px;
   left: 0;
-  background-color: #450000;
+  background-color: #b00006;
   border-radius: 50%;
 }
 .blog_part .single-home-blog .card span {

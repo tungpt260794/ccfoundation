@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Layout from "components/Layout";
 import BannerSmall from "components/area/BannerSmall";
@@ -16,47 +16,55 @@ import ButtonSimple from "components/FormControl/ButtonSimple";
 
 import appendFullStrapiUrl from "utils/helpers/appendFullStrapiUrl";
 import getValueByLocale from "utils/helpers/getValueByLocale";
-import { useBlogs, useBlogsCount } from "utils/hooks";
+import { useBlogs, useBlogsCount, useCategories } from "utils/hooks";
 import formatDate from "utils/helpers/formatDate";
 import {
   BLOGS_PAGE_LIMIT,
   ENPOINT_FIND_BLOGS,
   ENPOINT_COUNT_BLOGS,
+  ENPOINT_FIND_CATEGORIES,
 } from "utils/helpers/const";
 
-const Blogs = ({ blogsDataServer, blogsCountDataServer }) => {
+const Blogs = ({
+  blogsDataServer,
+  blogsCountDataServer,
+  categoriesDataServer,
+}) => {
   const { t } = useTranslation("blogs");
   const [search, setSearch] = useState();
   const router = useRouter();
   const { blogsData } = useBlogs({
     initialData: blogsDataServer,
-    query: router.query.title
-      ? {
-          _start:
-            (Number(router.query.page) || 1) * BLOGS_PAGE_LIMIT -
-            BLOGS_PAGE_LIMIT,
-          _limit: BLOGS_PAGE_LIMIT,
-          _locale: router.locale,
-          title: router.query.title,
-        }
-      : {
-          _start:
-            (Number(router.query.page) || 1) * BLOGS_PAGE_LIMIT -
-            BLOGS_PAGE_LIMIT,
-          _limit: BLOGS_PAGE_LIMIT,
-          _locale: router.locale,
-        },
+    query: {
+      _start:
+        (Number(router.query.page) || 1) * BLOGS_PAGE_LIMIT - BLOGS_PAGE_LIMIT,
+      _limit: BLOGS_PAGE_LIMIT,
+      _locale: router.locale,
+      title_contains: router.query.title,
+      ...(router.query.category
+        ? {
+            "categories.id_in": router.query.category,
+          }
+        : {}),
+    },
   });
   const { blogsCountData } = useBlogsCount({
     initialData: blogsCountDataServer,
-    query: router.query.title
-      ? {
-          _locale: router.locale,
-          title: router.query.title,
-        }
-      : {
-          _locale: router.locale,
-        },
+    query: {
+      _locale: router.locale,
+      title_contains: router.query.title,
+      ...(router.query.category
+        ? {
+            "categories.id_in": router.query.category,
+          }
+        : {}),
+    },
+  });
+  const { categoriesData } = useCategories({
+    initialData: categoriesDataServer,
+    query: {
+      _locale: router.locale,
+    },
   });
 
   return (
@@ -75,6 +83,19 @@ const Blogs = ({ blogsDataServer, blogsCountDataServer }) => {
 
       <section className="blog_area section-padding">
         <div className="container">
+          {router.query && router.query.category && (
+            <div className="row">
+              <h1 style={{ marginBottom: 24 }}>
+                {categoriesData.find((cd) =>
+                  router.query.category.find((c) => c === cd.id)
+                )
+                  ? categoriesData.find((cd) =>
+                      router.query.category.find((c) => c === cd.id)
+                    ).name
+                  : ""}
+              </h1>
+            </div>
+          )}
           <div className="row">
             <div className="col-lg-8 mb-5 mb-lg-0">
               {blogsData && !!blogsData.length && (
@@ -142,27 +163,29 @@ const Blogs = ({ blogsDataServer, blogsCountDataServer }) => {
 
                 <aside className="single_sidebar_widget post_category_widget">
                   <h4 className="widget_title">{t("categories.title")}</h4>
-                  <ul className="list cat-list">
-                    <li>
-                      <Link href="#">
-                        <a className="d-flex">
-                          <p>Dự án</p>
-                          <p>(37)</p>
-                        </a>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link href="#">
-                        <a className="d-flex">
-                          <p>Tin tức</p>
-                          <p>(10)</p>
-                        </a>
-                      </Link>
-                    </li>
-                  </ul>
+                  {categoriesData && !!categoriesData.length && (
+                    <ul className="list cat-list">
+                      {categoriesData.map((cd, i) => (
+                        <li key={`category${i}`}>
+                          <Link
+                            href={`/blogs?page=1&category=${
+                              cd.id
+                            }&${cd.localizations
+                              .map((l) => `category=${l.id}`)
+                              .join("&")}`}
+                          >
+                            <a className="d-flex">
+                              <p>{cd.name}</p>
+                              <p>({cd.blogs && cd.blogs.length})</p>
+                            </a>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </aside>
 
-                <aside className="single_sidebar_widget newsletter_widget">
+                {/* <aside className="single_sidebar_widget newsletter_widget">
                   <h4 className="widget_title">
                     {t("formSignUpNewsletter.title")}
                   </h4>
@@ -185,12 +208,19 @@ const Blogs = ({ blogsDataServer, blogsCountDataServer }) => {
                       }}
                     />
                   </form>
-                </aside>
+                </aside> */}
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      <div
+        style={{
+          backgroundImage: `url(/images/blogs-banner.png)`,
+        }}
+        className="become_volunter volunter_bg_1"
+      ></div>
     </Layout>
   );
 };
@@ -198,36 +228,33 @@ const Blogs = ({ blogsDataServer, blogsCountDataServer }) => {
 export const getServerSideProps = async (context) => {
   try {
     const blogsDataServer = await axios.get(
-      appendFullStrapiUrl(
-        ENPOINT_FIND_BLOGS,
-        context.query.title
+      appendFullStrapiUrl(ENPOINT_FIND_BLOGS, {
+        _start: (context.query.page || 1) * BLOGS_PAGE_LIMIT - BLOGS_PAGE_LIMIT,
+        _limit: BLOGS_PAGE_LIMIT,
+        _locale: context.locale,
+        title_contains: context.query.title,
+        ...(context.query.category
           ? {
-              _start:
-                (context.query.page || 1) * BLOGS_PAGE_LIMIT - BLOGS_PAGE_LIMIT,
-              _limit: BLOGS_PAGE_LIMIT,
-              _locale: context.locale,
-              title: context.query.title,
+              "categories.id_in": context.query.category,
             }
-          : {
-              _start:
-                (context.query.page || 1) * BLOGS_PAGE_LIMIT - BLOGS_PAGE_LIMIT,
-              _limit: BLOGS_PAGE_LIMIT,
-              _locale: context.locale,
-            }
-      )
+          : {}),
+      })
     );
     const blogsCountDataServer = await axios.get(
-      appendFullStrapiUrl(
-        ENPOINT_COUNT_BLOGS,
-        context.query.title
+      appendFullStrapiUrl(ENPOINT_COUNT_BLOGS, {
+        _locale: context.locale,
+        title_contains: context.query.title,
+        ...(context.query.category
           ? {
-              _locale: context.locale,
-              title: context.query.title,
+              "categories.id_in": context.query.category,
             }
-          : {
-              _locale: context.locale,
-            }
-      )
+          : {}),
+      })
+    );
+    const categoriesDataServer = await axios.get(
+      appendFullStrapiUrl(ENPOINT_FIND_CATEGORIES, {
+        _locale: context.locale,
+      })
     );
 
     return {
@@ -239,6 +266,7 @@ export const getServerSideProps = async (context) => {
         ])),
         blogsDataServer: blogsDataServer.data,
         blogsCountDataServer: blogsCountDataServer.data,
+        categoriesDataServer: categoriesDataServer.data,
       },
     };
   } catch (error) {

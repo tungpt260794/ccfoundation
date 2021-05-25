@@ -4,11 +4,12 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import Layout from "components/Layout";
-import BannerBig from "components/area/BannerBig";
-import DonateBig from "components/area/DonateBig";
+// import BannerBig from "components/area/BannerBig";
+// import DonateBig from "components/area/DonateBig";
 import PostBig from "components/area/PostBig";
-import SliderSmall from "components/area/SliderSmall";
-import DonateSmall from "components/area/DonateSmall";
+// import SliderSmall from "components/area/SliderSmall";
+// import DonateSmall from "components/area/DonateSmall";
+import BannerSmall from "components/area/BannerSmall";
 
 const Home = () => {
   const { t } = useTranslation("home");
@@ -21,13 +22,18 @@ const Home = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <BannerBig
+      {/* <BannerBig
         variant="big"
         title={t("slogan.title")}
         content={t("slogan.content")}
         backgroundUrl="/images/home-banner.png"
         linkHref="/become-volunteer"
         linkLabel={t("slogan.link-label")}
+      /> */}
+      <BannerSmall
+        variant="small"
+        title={t("slogan.title")}
+        backgroundUrl="/images/home-banner.png"
       />
 
       <PostBig

@@ -54,6 +54,13 @@ const Contact = () => {
           </div>
         </div>
       </div>
+
+      <div
+        style={{
+          backgroundImage: `url(/images/contact-banner.png)`,
+        }}
+        className="become_volunter volunter_bg_1"
+      ></div>
     </Layout>
   );
 };

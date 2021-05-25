@@ -120,6 +120,13 @@ const SignUpProject = () => {
           </div>
         </div>
       </div>
+
+      <div
+        style={{
+          backgroundImage: `url(/images/sign-up-project-banner.png)`,
+        }}
+        className="become_volunter volunter_bg_1"
+      ></div>
     </Layout>
   );
 };

@@ -124,7 +124,7 @@ const Blog = () => {
                   </ul>
                 </aside>
 
-                <aside className="single_sidebar_widget newsletter_widget">
+                {/* <aside className="single_sidebar_widget newsletter_widget">
                   <h4 className="widget_title">
                     {t("formSignUpNewsletter.title")}
                   </h4>
@@ -147,7 +147,7 @@ const Blog = () => {
                       }}
                     />
                   </form>
-                </aside>
+                </aside> */}
               </div>
             </div>
           </div>

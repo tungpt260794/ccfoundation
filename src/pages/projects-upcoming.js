@@ -104,6 +104,13 @@ const ProjectsUpcoming = ({ projectsDataServer, projectsCountDataServer }) => {
           </div>
         </div>
       </div>
+
+      <div
+        style={{
+          backgroundImage: `url(/images/projects-upcoming-banner.png)`,
+        }}
+        className="become_volunter volunter_bg_1"
+      ></div>
     </Layout>
   );
 };

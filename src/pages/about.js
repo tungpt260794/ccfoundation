@@ -46,6 +46,11 @@ const About = () => {
           </div>
         </div>
       </div>
+
+      <div
+        style={{ backgroundImage: `url(/images/about-banner.png)` }}
+        className="become_volunter volunter_bg_1"
+      ></div>
     </Layout>
   );
 };

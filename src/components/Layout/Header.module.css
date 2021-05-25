@@ -1,9 +1,14 @@
 .multiLang {
   display: grid;
   gap: 4px;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto auto auto;
   width: fit-content;
   float: right;
+  color: #ffffff;
+}
+
+.multiLang span {
+  cursor: pointer;
 }
 
 .multiLang img {
@@ -17,7 +22,7 @@
 @media (max-width: 990px) {
   .multiLang {
     position: absolute;
-    right: 70px;
-    top: -34px;
+    right: 20px;
+    top: -65px;
   }
 }
