@@ -93,7 +93,6 @@ export const getServerSideProps = async (context) => {
       })()
     : [];
   const localization = localizations.find((l) => l.locale === context.locale);
-  console.log(localizations);
 
   try {
     const projectDataServer = await axios.get(
