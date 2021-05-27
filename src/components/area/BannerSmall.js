@@ -3,7 +3,7 @@ const BannerSmall = ({ title, backgroundUrl }) => {
     <div
       style={{
         backgroundImage: `url(${backgroundUrl})`,
-        padding: `200px 0 100px 0`,
+        padding: `250px 0 40px 0`,
       }}
       className="breadcam_area bradcam_bg"
     >
