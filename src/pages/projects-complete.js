@@ -21,7 +21,7 @@ import {
 const ProjectsComplete = ({ projectsDataServer, projectsCountDataServer }) => {
   const { t } = useTranslation("projects-complete");
   const router = useRouter();
-  const { projectsData } = useProjects({
+  const { projectsData, projectsLoading } = useProjects({
     initialData: projectsDataServer,
     query: router.query.title
       ? {
@@ -42,7 +42,7 @@ const ProjectsComplete = ({ projectsDataServer, projectsCountDataServer }) => {
           completed: true,
         },
   });
-  const { projectsCountData } = useProjectsCount({
+  const { projectsCountData, projectsCountLoading } = useProjectsCount({
     initialData: projectsCountDataServer,
     query: router.query.title
       ? {
@@ -101,6 +101,7 @@ const ProjectsComplete = ({ projectsDataServer, projectsCountDataServer }) => {
                 </div>
               </>
             )}
+            {!projectsData || (projectsData.length === 0 && t("updating"))}
           </div>
         </div>
       </div>

@@ -1,7 +1,10 @@
 const BannerSmall = ({ title, backgroundUrl }) => {
   return (
     <div
-      style={{ backgroundImage: `url(${backgroundUrl})` }}
+      style={{
+        backgroundImage: `url(${backgroundUrl})`,
+        padding: `300px 0 100px 0`,
+      }}
       className="breadcam_area bradcam_bg"
     >
       <div className="container">

@@ -101,6 +101,7 @@ const ProjectsUpcoming = ({ projectsDataServer, projectsCountDataServer }) => {
                 </div>
               </>
             )}
+            {!projectsData || (projectsData.length === 0 && t("updating"))}
           </div>
         </div>
       </div>

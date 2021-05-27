@@ -10,7 +10,7 @@ const Footer = () => {
     () => [
       {
         title: t("connect-with-us"),
-        className: "col-xl-3 col-md-6 col-lg-3",
+        className: "col-xl-4 col-md-6 col-lg-4",
         content: (
           <p className="footer_text doanar">
             {" "}
@@ -26,7 +26,7 @@ const Footer = () => {
       },
       {
         title: t("contact"),
-        className: "col-xl-3 col-md-6 col-lg-3",
+        className: "col-xl-4 col-md-6 col-lg-4",
         content: (
           <>
             <p className="footer_text">
@@ -70,40 +70,21 @@ const Footer = () => {
       },
       {
         title: "CC Foundation",
-        className: "col-xl-2 col-md-6 col-lg-2",
-        content: (
-          <ul>
-            <li>
-              <Link href="/">
-                <a>{t("home-page")}</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/about">
-                <a>{t("about-us")}</a>
-              </Link>
-            </li>
-            <li>
-              <Link href="/blogs?page=1">
-                <a>{t("blogs")}</a>
-              </Link>
-            </li>
-          </ul>
-        ),
-      },
-      {
-        title: t("sign-up-newsletter"),
         className: "col-xl-4 col-md-6 col-lg-4",
         content: (
-          <>
-            <form action="#" className="newsletter_form">
-              <input type="text" placeholder={t("enter-your-email")} />
-              <button type="submit">{t("sign-up")}</button>
-            </form>
-            <p className="newsletter_text">
-              {t("sign-up-newsletter-to-update-info")}
-            </p>
-          </>
+          <p className="footer_text doanar">
+            <Link href="/">
+              <a>{t("home-page")}</a>
+            </Link>
+            <br />
+            <Link href="/about">
+              <a>{t("about-us")}</a>
+            </Link>
+            <br />
+            <Link href="/blogs?page=1">
+              <a>{t("blogs")}</a>
+            </Link>
+          </p>
         ),
       },
     ],
@@ -135,11 +116,8 @@ const Footer = () => {
                 <p className="copy_right text-center">
                   {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
                   Copyright &copy;
-                  {new Date().getFullYear()}{" "}
-                  <i className="fa fa-heart-o" aria-hidden="true"></i>{" "}
-                  <Link href="/">
-                    <a>CC FOUNDATION</a>
-                  </Link>
+                  {new Date().getFullYear()} CCF. All rights reserved.
+                  <i className="fa fa-heart-o" aria-hidden="true"></i>
                   {/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
                 </p>
               </div>

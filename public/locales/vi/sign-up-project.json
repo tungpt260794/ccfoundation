@@ -1,5 +1,7 @@
 {
   "head-title": "Đăng ký dự án",
+  "sign-up-success": "Đăng ký thành công",
+  "require": "Bạn phải nhập thông tin vào tất cả các trường",
   "slogan": {
     "title": "Đăng ký dự án"
   },

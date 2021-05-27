@@ -88,9 +88,18 @@ const SignUpProject = () => {
                 type="button"
                 label={t("contact.btnLabel")}
                 onClick={async () => {
-                  await mutateCreateGrantApplication({ body: values });
-                  alert("Đăng ký thành công");
-                  setValues({});
+                  if (
+                    values.fullName &&
+                    values.phone &&
+                    values.email &&
+                    values.content
+                  ) {
+                    await mutateCreateGrantApplication({ body: values });
+                    alert(t("sign-up-success"));
+                    setValues({});
+                  } else {
+                    alert(t("require"));
+                  }
                 }}
               />
             </div>

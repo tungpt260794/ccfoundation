@@ -20,7 +20,7 @@ const About = () => {
       <BannerSmall
         variant="small"
         title={t("slogan.title")}
-        backgroundUrl="/images/about-banner.png"
+        backgroundUrl="/images/home-banner.png"
       />
 
       <div className="about_page">
@@ -48,7 +48,7 @@ const About = () => {
       </div>
 
       <div
-        style={{ backgroundImage: `url(/images/about-banner.png)` }}
+        style={{ backgroundImage: `url(/images/home-banner.png)` }}
         className="become_volunter volunter_bg_1"
       ></div>
     </Layout>

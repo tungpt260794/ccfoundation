@@ -1,5 +1,7 @@
 {
   "head-title": "Apply for a grant",
+  "sign-up-success": "Sign up success",
+  "require": "You must enter information in all fields",
   "slogan": {
     "title": "Apply for a grant"
   },
