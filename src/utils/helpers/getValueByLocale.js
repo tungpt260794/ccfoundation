@@ -1,9 +1,5 @@
-import { useRouter } from "next/router";
-
-const getValueByLocale = (values) => {
-  const router = useRouter();
-
-  return values[router.locale];
+const getValueByLocale = (locale) => {
+  return { vi: "M", en: "LLL" }[locale];
 };
 
 export default getValueByLocale;

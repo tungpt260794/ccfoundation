@@ -3,58 +3,64 @@ import { useRouter } from "next/router";
 
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import axios from "axios";
+import { useState, useEffect, useCallback } from "react";
 
 import Layout from "components/Layout";
 import BannerSmall from "components/area/BannerSmall";
 import DonateSmall from "components/area/DonateSmall";
 import Paging from "components/area/Paging";
+import Loader from "components/other/Loader";
 
+import { serviceFindProjects, serviceCountProjects } from "utils/services";
+import { PROJECTS_PAGE_LIMIT } from "utils/helpers/const";
 import appendFullStrapiUrl from "utils/helpers/appendFullStrapiUrl";
-import { useProjects, useProjectsCount } from "utils/hooks";
-import {
-  PROJECTS_PAGE_LIMIT,
-  ENPOINT_FIND_PROJECTS,
-  ENPOINT_COUNT_PROJECTS,
-} from "utils/helpers/const";
 
-const ProjectsComplete = ({ projectsDataServer, projectsCountDataServer }) => {
+const ProjectsComplete = ({ projectsDataServer, projectsCountServer }) => {
   const { t } = useTranslation("projects-complete");
   const router = useRouter();
-  const { projectsData, projectsLoading } = useProjects({
-    initialData: projectsDataServer,
-    query: router.query.title
-      ? {
-          _start:
-            (Number(router.query.page) || 1) * PROJECTS_PAGE_LIMIT -
-            PROJECTS_PAGE_LIMIT,
-          _limit: PROJECTS_PAGE_LIMIT,
-          _locale: router.locale,
-          completed: true,
-          title: router.query.title,
-        }
-      : {
-          _start:
-            (Number(router.query.page) || 1) * PROJECTS_PAGE_LIMIT -
-            PROJECTS_PAGE_LIMIT,
-          _limit: PROJECTS_PAGE_LIMIT,
-          _locale: router.locale,
-          completed: true,
-        },
-  });
-  const { projectsCountData, projectsCountLoading } = useProjectsCount({
-    initialData: projectsCountDataServer,
-    query: router.query.title
-      ? {
-          _locale: router.locale,
-          completed: true,
-          title: router.query.title,
-        }
-      : {
-          _locale: router.locale,
-          completed: true,
-        },
-  });
+  const [projectsData, setProjectsData] = useState(projectsDataServer);
+  const [projectsCount, setProjectsCount] = useState(projectsCountServer);
+  const [loading, setLoading] = useState(true);
+
+  const getData = useCallback(async () => {
+    const _projectsData = await serviceFindProjects({
+      initData: projectsDataServer ? projectsDataServer.data : null,
+      query: {
+        _start:
+          (Number(router.query.page) || 1) * PROJECTS_PAGE_LIMIT -
+          PROJECTS_PAGE_LIMIT,
+        _limit: PROJECTS_PAGE_LIMIT,
+        _locale: router.locale,
+        completed: true,
+      },
+    });
+    const _projectsCount = await serviceCountProjects({
+      initData: projectsCountServer ? projectsCountServer.data : null,
+      query: {
+        _locale: router.locale,
+        completed: true,
+      },
+    });
+
+    setProjectsData(_projectsData);
+    setProjectsCount(_projectsCount);
+
+    setLoading(false);
+  }, [
+    serviceFindProjects,
+    serviceCountProjects,
+    setProjectsData,
+    setProjectsCount,
+    setLoading,
+    router.locale,
+    router.query.page,
+    projectsDataServer,
+    projectsCountServer,
+  ]);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   return (
     <Layout>
@@ -73,15 +79,15 @@ const ProjectsComplete = ({ projectsDataServer, projectsCountDataServer }) => {
       <div className="help_area help_area_page ">
         <div className="container">
           <div className="row">
-            {projectsData && !!projectsData.length && (
+            {projectsData && projectsData.data && !!projectsData.data.length && (
               <>
-                {projectsData.map((pd, i) => (
+                {projectsData.data.map((pd, i) => (
                   <div
                     key={`project${i}`}
                     className="col-xl-4 col-lg-4 col-md-6"
                   >
                     <DonateSmall
-                      imgUrl={pd.image ? pd.image.url : ""}
+                      imgUrl={pd.image ? appendFullStrapiUrl(pd.image.url) : ""}
                       title={pd.title}
                       linkHref={`/project/${pd.id}?localizations=${pd.id}-${
                         pd.locale
@@ -95,13 +101,18 @@ const ProjectsComplete = ({ projectsDataServer, projectsCountDataServer }) => {
 
                 <div className="col-xl-12">
                   <Paging
-                    count={projectsCountData}
+                    count={projectsCount && projectsCount.data}
                     limit={PROJECTS_PAGE_LIMIT}
                   />
                 </div>
               </>
             )}
-            {!projectsData || (projectsData.length === 0 && t("updating"))}
+            {loading && <Loader />}
+            {!loading &&
+              (!projectsData ||
+                !projectsData.data ||
+                projectsData.data.length === 0) &&
+              t("updating")}
           </div>
         </div>
       </div>
@@ -117,70 +128,53 @@ const ProjectsComplete = ({ projectsDataServer, projectsCountDataServer }) => {
 };
 
 export const getServerSideProps = async (context) => {
-  try {
-    const projectsDataServer = await axios.get(
-      appendFullStrapiUrl(
-        ENPOINT_FIND_PROJECTS,
-        context.query.title
-          ? {
-              _start:
-                (context.query.page || 1) * PROJECTS_PAGE_LIMIT -
-                PROJECTS_PAGE_LIMIT,
-              _limit: PROJECTS_PAGE_LIMIT,
-              _locale: context.locale,
-              completed: true,
-              title: context.query.title,
-            }
-          : {
-              _start:
-                (context.query.page || 1) * PROJECTS_PAGE_LIMIT -
-                PROJECTS_PAGE_LIMIT,
-              _limit: PROJECTS_PAGE_LIMIT,
-              _locale: context.locale,
-              completed: true,
-            }
-      )
-    );
-    const projectsCountDataServer = await axios.get(
-      appendFullStrapiUrl(
-        ENPOINT_COUNT_PROJECTS,
-        context.query.title
-          ? {
-              _locale: context.locale,
-              completed: true,
-              title: context.query.title,
-            }
-          : {
-              _locale: context.locale,
-              completed: true,
-            }
-      )
-    );
+  const isCsr =
+    !context ||
+    !context.req ||
+    (context.req.url && context.req.url.startsWith("/_next/data"));
 
-    return {
-      props: {
-        ...(await serverSideTranslations(context.locale, [
-          "header",
-          "footer",
-          "projects-complete",
-        ])),
-        projectsDataServer: projectsDataServer.data,
-        projectsCountDataServer: projectsCountDataServer.data,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        ...(await serverSideTranslations(context.locale, [
-          "header",
-          "footer",
-          "projects-complete",
-        ])),
-        projectsDataServer: [],
-        projectsCountDataServer: 0,
-      },
-    };
+  if (!isCsr) {
+    try {
+      const projectsDataServer = await serviceFindProjects({
+        query: {
+          _start:
+            (context.query.page || 1) * PROJECTS_PAGE_LIMIT -
+            PROJECTS_PAGE_LIMIT,
+          _limit: PROJECTS_PAGE_LIMIT,
+          _locale: context.locale,
+          completed: true,
+        },
+      });
+      const projectsCountServer = await serviceCountProjects({
+        query: {
+          _locale: context.locale,
+          completed: true,
+        },
+      });
+
+      return {
+        props: {
+          ...(await serverSideTranslations(context.locale, [
+            "header",
+            "footer",
+            "projects-complete",
+          ])),
+          projectsDataServer: projectsDataServer,
+          projectsCountServer: projectsCountServer,
+        },
+      };
+    } catch (error) {}
   }
+
+  return {
+    props: {
+      ...(await serverSideTranslations(context.locale, [
+        "header",
+        "footer",
+        "projects-complete",
+      ])),
+    },
+  };
 };
 
 export default ProjectsComplete;

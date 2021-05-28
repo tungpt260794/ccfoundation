@@ -10,6 +10,8 @@ const findProjects = ({ useSWR, fetcher }, options = {}) => {
     }
   );
 
+  console.log(error);
+  console.log(data);
   return {
     projectsData: data,
     projectsError: error,

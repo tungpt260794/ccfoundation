@@ -3,33 +3,54 @@ import { useRouter } from "next/router";
 
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import axios from "axios";
 import ReactMarkdown from "react-markdown";
+import { useState, useCallback, useEffect } from "react";
 
 import Layout from "components/Layout";
 import BannerSmall from "components/area/BannerSmall";
 import DonateBig from "components/area/DonateBig";
 
 import appendFullStrapiUrl from "utils/helpers/appendFullStrapiUrl";
-import { ENPOINT_FIND_PROJECTS } from "utils/helpers/const";
-import { useProject } from "utils/hooks";
+import { serviceFindProject } from "utils/services";
+import Loader from "components/other/Loader";
 
 import styles from "./Project.module.css";
 
-const Project = ({ projectDataServer, params, localizations }) => {
+const Project = ({ projectDataServer, localizations }) => {
   const { t } = useTranslation("project");
   const router = useRouter();
-  const { projectData } = useProject({
-    initialData: projectDataServer,
-    params: {
-      id: localizations.find((l) => l.locale === router.locale)
-        ? localizations.find((l) => l.locale === router.locale).id
-        : params.id,
-    },
-    query: {
-      _locale: router.locale,
-    },
-  });
+  const [projectData, setProjectData] = useState(projectDataServer);
+  const [loading, setLoading] = useState(true);
+
+  const getData = useCallback(async () => {
+    const _projectData = await serviceFindProject({
+      initData: projectDataServer ? projectDataServer.data : null,
+      params: {
+        id: localizations.find((l) => l.locale === router.locale)
+          ? localizations.find((l) => l.locale === router.locale).id
+          : router.params.id,
+      },
+      query: {
+        _locale: router.locale,
+      },
+    });
+
+    setProjectData(_projectData);
+
+    setLoading(false);
+  }, [
+    serviceFindProject,
+    setProjectData,
+    setLoading,
+    router.locale,
+    router.params,
+    localizations,
+    projectDataServer,
+  ]);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   return (
     <Layout>
@@ -45,26 +66,40 @@ const Project = ({ projectDataServer, params, localizations }) => {
         backgroundUrl="/images/projects-complete-banner.png"
       />
 
-      <DonateBig
-        title={projectData.title}
-        content={
-          <div className={styles.projectContent}>
-            <ReactMarkdown>
-              {projectData.content &&
-                projectData.content.replace(
-                  "](",
-                  `](${process.env.NEXT_PUBLIC_STRAPI_DOMAIN_API}`
-                )}
-            </ReactMarkdown>
-          </div>
-        }
-        imgUrl={projectData.image ? projectData.image.url : ""}
-      />
+      <div className="container" style={{ marginTop: 60 }}>
+        {loading && <Loader />}
+        <DonateBig
+          title={projectData && projectData.data && projectData.data.title}
+          content={
+            <div className={styles.projectContent}>
+              <ReactMarkdown>
+                {projectData &&
+                  projectData.data &&
+                  projectData.data.content &&
+                  projectData.data.content.replace(
+                    "](",
+                    `](${process.env.NEXT_PUBLIC_STRAPI_DOMAIN_API}`
+                  )}
+              </ReactMarkdown>
+            </div>
+          }
+          imgUrl={
+            projectData && projectData.data && projectData.data.image
+              ? appendFullStrapiUrl(projectData.data.image.url)
+              : ""
+          }
+        />
+      </div>
     </Layout>
   );
 };
 
 export const getServerSideProps = async (context) => {
+  const isCsr =
+    !context ||
+    !context.req ||
+    (context.req.url && context.req.url.startsWith("/_next/data"));
+
   const localizations = Array.isArray(context.query.localizations)
     ? context.query.localizations.map((l) => {
         const array = l.split("-");
@@ -92,46 +127,42 @@ export const getServerSideProps = async (context) => {
         ];
       })()
     : [];
-  const localization = localizations.find((l) => l.locale === context.locale);
 
-  try {
-    const projectDataServer = await axios.get(
-      appendFullStrapiUrl(
-        `${ENPOINT_FIND_PROJECTS}/${
-          localization ? localization.id : context.params.id
-        }`,
-        {
-          _locale: context.locale,
-        }
-      )
-    );
+  if (!isCsr) {
+    try {
+      const localization = localizations.find(
+        (l) => l.locale === context.locale
+      );
 
-    return {
-      props: {
-        ...(await serverSideTranslations(context.locale, [
-          "header",
-          "footer",
-          "project",
-        ])),
-        projectDataServer: projectDataServer.data,
-        localizations,
-        params: context.params,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        ...(await serverSideTranslations(context.locale, [
-          "header",
-          "footer",
-          "project",
-        ])),
-        projectDataServer: {},
-        localizations: [],
-        params: context.params,
-      },
-    };
+      const projectDataServer = await serviceFindProject({
+        params: { id: localization ? localization.id : context.params.id },
+        query: { _locale: context.locale },
+      });
+
+      return {
+        props: {
+          ...(await serverSideTranslations(context.locale, [
+            "header",
+            "footer",
+            "project",
+          ])),
+          projectDataServer: projectDataServer,
+          localizations,
+        },
+      };
+    } catch (error) {}
   }
+
+  return {
+    props: {
+      ...(await serverSideTranslations(context.locale, [
+        "header",
+        "footer",
+        "project",
+      ])),
+      localizations,
+    },
+  };
 };
 
 export default Project;

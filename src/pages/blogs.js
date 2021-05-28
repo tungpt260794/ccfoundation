@@ -4,8 +4,7 @@ import { useRouter } from "next/router";
 
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 import Layout from "components/Layout";
 import BannerSmall from "components/area/BannerSmall";
@@ -13,59 +12,88 @@ import Blog from "components/area/Blog";
 import Paging from "components/area/Paging";
 import InputSimple from "components/FormControl/InputSimple";
 import ButtonSimple from "components/FormControl/ButtonSimple";
+import Loader from "components/other/Loader";
 
-import appendFullStrapiUrl from "utils/helpers/appendFullStrapiUrl";
 import getValueByLocale from "utils/helpers/getValueByLocale";
-import { useBlogs, useBlogsCount, useCategories } from "utils/hooks";
-import formatDate from "utils/helpers/formatDate";
 import {
-  BLOGS_PAGE_LIMIT,
-  ENPOINT_FIND_BLOGS,
-  ENPOINT_COUNT_BLOGS,
-  ENPOINT_FIND_CATEGORIES,
-} from "utils/helpers/const";
+  serviceFindBlogs,
+  serviceCountBlogs,
+  serviceFindCategories,
+} from "utils/services";
+import formatDate from "utils/helpers/formatDate";
+import { BLOGS_PAGE_LIMIT } from "utils/helpers/const";
+import appendFullStrapiUrl from "utils/helpers/appendFullStrapiUrl";
 
-const Blogs = ({
-  blogsDataServer,
-  blogsCountDataServer,
-  categoriesDataServer,
-}) => {
+const Blogs = ({ blogsDataServer, blogsCountServer, categoriesDataServer }) => {
   const { t } = useTranslation("blogs");
   const [search, setSearch] = useState();
   const router = useRouter();
-  const { blogsData } = useBlogs({
-    initialData: blogsDataServer,
-    query: {
-      _start:
-        (Number(router.query.page) || 1) * BLOGS_PAGE_LIMIT - BLOGS_PAGE_LIMIT,
-      _limit: BLOGS_PAGE_LIMIT,
-      _locale: router.locale,
-      title_contains: router.query.title,
-      ...(router.query.category
-        ? {
-            "categories.id_in": router.query.category,
-          }
-        : {}),
-    },
-  });
-  const { blogsCountData } = useBlogsCount({
-    initialData: blogsCountDataServer,
-    query: {
-      _locale: router.locale,
-      title_contains: router.query.title,
-      ...(router.query.category
-        ? {
-            "categories.id_in": router.query.category,
-          }
-        : {}),
-    },
-  });
-  const { categoriesData } = useCategories({
-    initialData: categoriesDataServer,
-    query: {
-      _locale: router.locale,
-    },
-  });
+  const [blogsData, setBlogsData] = useState(blogsDataServer);
+  const [blogsCount, setBlogsCount] = useState(blogsCountServer);
+  const [categoriesData, setCategoriesData] = useState(categoriesDataServer);
+  const [loading, setLoading] = useState(true);
+
+  const getData = useCallback(async () => {
+    const _blogsData = await serviceFindBlogs({
+      initData: blogsDataServer ? blogsDataServer.data : null,
+      query: {
+        _start:
+          (Number(router.query.page) || 1) * BLOGS_PAGE_LIMIT -
+          BLOGS_PAGE_LIMIT,
+        _limit: BLOGS_PAGE_LIMIT,
+        _locale: router.locale,
+        title_contains: router.query.title,
+        ...(router.query.category
+          ? {
+              "categories.id_in": router.query.category,
+            }
+          : {}),
+      },
+    });
+    const _blogsCount = await serviceCountBlogs({
+      initData: blogsCountServer ? blogsCountServer.data : null,
+      query: {
+        _locale: router.locale,
+        title_contains: router.query.title,
+        ...(router.query.category
+          ? {
+              "categories.id_in": router.query.category,
+            }
+          : {}),
+      },
+    });
+    const _categoriesData = await serviceFindCategories({
+      initData: categoriesDataServer ? categoriesDataServer.data : null,
+      query: {
+        _locale: router.locale,
+      },
+    });
+
+    setBlogsData(_blogsData);
+    setBlogsCount(_blogsCount);
+    setCategoriesData(_categoriesData);
+
+    setLoading(false);
+  }, [
+    serviceFindBlogs,
+    serviceCountBlogs,
+    serviceFindCategories,
+    setBlogsData,
+    setBlogsCount,
+    setCategoriesData,
+    setLoading,
+    router.locale,
+    router.query.page,
+    router.query.title,
+    router.query.category,
+    blogsDataServer,
+    blogsCountServer,
+    categoriesDataServer,
+  ]);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   return (
     <Layout>
@@ -86,14 +114,15 @@ const Blogs = ({
           {router.query && router.query.category && (
             <div className="row">
               <h1 style={{ marginBottom: 24 }}>
-                {categoriesData.find((cd) =>
+                {categoriesData &&
+                categoriesData.data.find((cd) =>
                   router.query.category
                     ? Array.isArray(router.query.category)
                       ? router.query.category.find((c) => c === cd.id)
                       : router.query.category === cd.id
                     : false
                 )
-                  ? categoriesData.find((cd) =>
+                  ? categoriesData.data.find((cd) =>
                       router.query.category
                         ? Array.isArray(router.query.category)
                           ? router.query.category.find((c) => c === cd.id)
@@ -106,12 +135,12 @@ const Blogs = ({
           )}
           <div className="row">
             <div className="col-lg-8 mb-5 mb-lg-0">
-              {blogsData && !!blogsData.length && (
+              {blogsData && blogsData.data && !!blogsData.data.length && (
                 <div className="blog_left_sidebar">
-                  {blogsData.map((bd, i) => (
+                  {blogsData.data.map((bd, i) => (
                     <Blog
                       key={`blog${i}`}
-                      imgUrl={bd.image ? bd.image.url : ""}
+                      imgUrl={bd.image ? appendFullStrapiUrl(bd.image.url) : ""}
                       day={formatDate({
                         value: bd.updatedAt,
                         formatStr: "dd",
@@ -119,7 +148,7 @@ const Blogs = ({
                       })}
                       month={formatDate({
                         value: bd.updatedAt,
-                        formatStr: getValueByLocale({ vi: "M", en: "LLL" }),
+                        formatStr: getValueByLocale(router.locale),
                         type: "utc",
                       })}
                       blogUrl={`/blog/${bd.id}?localizations=${bd.id}-${
@@ -132,9 +161,13 @@ const Blogs = ({
                     />
                   ))}
 
-                  <Paging count={blogsCountData} limit={BLOGS_PAGE_LIMIT} />
+                  <Paging
+                    count={blogsCount && blogsCount.data}
+                    limit={BLOGS_PAGE_LIMIT}
+                  />
                 </div>
               )}
+              {loading && <Loader />}
             </div>
 
             <div className="col-lg-4">
@@ -171,26 +204,30 @@ const Blogs = ({
 
                 <aside className="single_sidebar_widget post_category_widget">
                   <h4 className="widget_title">{t("categories.title")}</h4>
-                  {categoriesData && !!categoriesData.length && (
-                    <ul className="list cat-list">
-                      {categoriesData.map((cd, i) => (
-                        <li key={`category${i}`}>
-                          <Link
-                            href={`/blogs?page=1&category=${
-                              cd.id
-                            }&${cd.localizations
-                              .map((l) => `category=${l.id}`)
-                              .join("&")}`}
-                          >
-                            <a className="d-flex">
-                              <p>{cd.name}</p>
-                              <p>({cd.blogs && cd.blogs.length})</p>
-                            </a>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  {categoriesData &&
+                    categoriesData.data &&
+                    !!categoriesData.data.length && (
+                      <ul className="list cat-list">
+                        {categoriesData.data.map((cd, i) => (
+                          <li key={`category${i}`}>
+                            <Link
+                              href={`/blogs?page=1&category=${
+                                cd.id
+                              }&${cd.localizations
+                                .map((l) => `category=${l.id}`)
+                                .join("&")}`}
+                            >
+                              <a className="d-flex">
+                                <p>{cd.name}</p>
+                                <p style={{ marginLeft: 4 }}>
+                                  ({cd.blogs && cd.blogs.length})
+                                </p>
+                              </a>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                 </aside>
 
                 {/* <aside className="single_sidebar_widget newsletter_widget">
@@ -234,63 +271,69 @@ const Blogs = ({
 };
 
 export const getServerSideProps = async (context) => {
-  try {
-    const blogsDataServer = await axios.get(
-      appendFullStrapiUrl(ENPOINT_FIND_BLOGS, {
-        _start: (context.query.page || 1) * BLOGS_PAGE_LIMIT - BLOGS_PAGE_LIMIT,
-        _limit: BLOGS_PAGE_LIMIT,
-        _locale: context.locale,
-        title_contains: context.query.title,
-        ...(context.query.category
-          ? {
-              "categories.id_in": context.query.category,
-            }
-          : {}),
-      })
-    );
-    const blogsCountDataServer = await axios.get(
-      appendFullStrapiUrl(ENPOINT_COUNT_BLOGS, {
-        _locale: context.locale,
-        title_contains: context.query.title,
-        ...(context.query.category
-          ? {
-              "categories.id_in": context.query.category,
-            }
-          : {}),
-      })
-    );
-    const categoriesDataServer = await axios.get(
-      appendFullStrapiUrl(ENPOINT_FIND_CATEGORIES, {
-        _locale: context.locale,
-      })
-    );
+  const isCsr =
+    !context ||
+    !context.req ||
+    (context.req.url && context.req.url.startsWith("/_next/data"));
 
-    return {
-      props: {
-        ...(await serverSideTranslations(context.locale, [
-          "header",
-          "footer",
-          "blogs",
-        ])),
-        blogsDataServer: blogsDataServer.data,
-        blogsCountDataServer: blogsCountDataServer.data,
-        categoriesDataServer: categoriesDataServer.data,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        ...(await serverSideTranslations(context.locale, [
-          "header",
-          "footer",
-          "blogs",
-        ])),
-        blogsDataServer: [],
-        blogsCountDataServer: 0,
-        categoriesDataServer: [],
-      },
-    };
+  if (!isCsr) {
+    try {
+      const blogsDataServer = await serviceFindBlogs({
+        query: {
+          _start:
+            (Number(context.query.page) || 1) * BLOGS_PAGE_LIMIT -
+            BLOGS_PAGE_LIMIT,
+          _limit: BLOGS_PAGE_LIMIT,
+          _locale: context.locale,
+          title_contains: context.query.title,
+          ...(context.query.category
+            ? {
+                "categories.id_in": context.query.category,
+              }
+            : {}),
+        },
+      });
+      const blogsCountServer = await serviceCountBlogs({
+        query: {
+          _locale: context.locale,
+          title_contains: context.query.title,
+          ...(context.query.category
+            ? {
+                "categories.id_in": context.query.category,
+              }
+            : {}),
+        },
+      });
+      const categoriesDataServer = await serviceFindCategories({
+        query: {
+          _locale: context.locale,
+        },
+      });
+
+      return {
+        props: {
+          ...(await serverSideTranslations(context.locale, [
+            "header",
+            "footer",
+            "blogs",
+          ])),
+          blogsDataServer: blogsDataServer,
+          blogsCountServer: blogsCountServer,
+          categoriesDataServer: categoriesDataServer,
+        },
+      };
+    } catch (error) {}
   }
+
+  return {
+    props: {
+      ...(await serverSideTranslations(context.locale, [
+        "header",
+        "footer",
+        "blogs",
+      ])),
+    },
+  };
 };
 
 export default Blogs;

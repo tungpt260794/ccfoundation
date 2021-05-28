@@ -10,8 +10,6 @@ const countProjects = ({ useSWR, fetcher }, options = {}) => {
     }
   );
 
-  console.log(error);
-  console.log(data === null || data === undefined);
   return {
     projectsCountData: data,
     projectsCountError: error,

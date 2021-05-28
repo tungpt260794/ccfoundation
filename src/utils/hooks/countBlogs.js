@@ -13,7 +13,7 @@ const countBlogs = ({ useSWR, fetcher }, options = {}) => {
   return {
     blogsCountData: data,
     blogsCountError: error,
-    blogsCountLoading: !error && !data,
+    blogsCountLoading: !error && (data === null || data === undefined),
   };
 };
 

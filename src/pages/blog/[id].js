@@ -4,50 +4,67 @@ import { useRouter } from "next/router";
 
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import axios from "axios";
 import ReactMarkdown from "react-markdown";
-import { useState } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 import Layout from "components/Layout";
 import BannerSmall from "components/area/BannerSmall";
 import InputSimple from "components/FormControl/InputSimple";
 import ButtonSimple from "components/FormControl/ButtonSimple";
+import Loader from "components/other/Loader";
 
 import appendFullStrapiUrl from "utils/helpers/appendFullStrapiUrl";
-import {
-  ENPOINT_FIND_BLOGS,
-  ENPOINT_FIND_CATEGORIES,
-} from "utils/helpers/const";
-import { useBlog, useCategories } from "utils/hooks";
+import { serviceFindBlog, serviceFindCategories } from "utils/services";
 
 import styles from "./Blog.module.css";
 
-const Blog = ({
-  blogDataServer,
-  params,
-  localizations,
-  categoriesDataServer,
-}) => {
+const Blog = ({ blogDataServer, localizations, categoriesDataServer }) => {
   const { t } = useTranslation("blog");
   const [search, setSearch] = useState();
   const router = useRouter();
-  const { blogData } = useBlog({
-    initialData: blogDataServer,
-    params: {
-      id: localizations.find((l) => l.locale === router.locale)
-        ? localizations.find((l) => l.locale === router.locale).id
-        : params.id,
-    },
-    query: {
-      _locale: router.locale,
-    },
-  });
-  const { categoriesData } = useCategories({
-    initialData: categoriesDataServer,
-    query: {
-      _locale: router.locale,
-    },
-  });
+  const [blogData, setBlogData] = useState(blogDataServer);
+  const [categoriesData, setCategoriesData] = useState(categoriesDataServer);
+  const [loading, setLoading] = useState(true);
+
+  const getData = useCallback(async () => {
+    const _blogData = await serviceFindBlog({
+      initData: blogDataServer ? blogDataServer.data : null,
+      params: {
+        id: localizations.find((l) => l.locale === router.locale)
+          ? localizations.find((l) => l.locale === router.locale).id
+          : router.params.id,
+      },
+      query: {
+        _locale: router.locale,
+      },
+    });
+    const _categoriesData = await serviceFindCategories({
+      initData: categoriesDataServer ? categoriesDataServer.data : null,
+      query: {
+        _locale: router.locale,
+      },
+    });
+
+    setBlogData(_blogData);
+    setCategoriesData(_categoriesData);
+
+    setLoading(false);
+  }, [
+    serviceFindBlog,
+    serviceFindCategories,
+    setBlogData,
+    setCategoriesData,
+    setLoading,
+    router.locale,
+    router.params,
+    localizations,
+    blogDataServer,
+    categoriesDataServer,
+  ]);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   return (
     <Layout>
@@ -71,22 +88,33 @@ const Blog = ({
                 <div className="feature-img">
                   <img
                     className="img-fluid"
-                    src={blogData.image ? blogData.image.url : ""}
-                    alt={blogData.image}
+                    src={
+                      blogData && blogData.data && blogData.data.image
+                        ? appendFullStrapiUrl(blogData.data.image.url)
+                        : ""
+                    }
+                    alt={
+                      blogData && blogData.data && blogData.data.image
+                        ? blogData.data.image.url
+                        : ""
+                    }
                   />
                 </div>
                 <div className="blog_details">
-                  <h2>{blogData.title}</h2>
+                  <h2>{blogData && blogData.data && blogData.data.title}</h2>
 
                   <div className={styles.blogContent}>
                     <ReactMarkdown>
-                      {blogData.content &&
-                        blogData.content.replace(
-                          "](",
-                          `](${process.env.NEXT_PUBLIC_STRAPI_DOMAIN_API}`
+                      {blogData &&
+                        blogData.data &&
+                        blogData.data.content &&
+                        blogData.data.content.replace(
+                          /[\]]{1}[(]{1}[\/]{1}[u]{1}[p]{1}[l]{1}[o]{1}[a]{1}[d]{1}[s]{1}/g,
+                          `](${process.env.NEXT_PUBLIC_STRAPI_DOMAIN_API}/uploads`
                         )}
                     </ReactMarkdown>
                   </div>
+                  {loading && <Loader />}
                 </div>
               </div>
             </div>
@@ -118,26 +146,30 @@ const Blog = ({
 
                 <aside className="single_sidebar_widget post_category_widget">
                   <h4 className="widget_title">{t("categories.title")}</h4>
-                  {categoriesData && !!categoriesData.length && (
-                    <ul className="list cat-list">
-                      {categoriesData.map((cd, i) => (
-                        <li key={`category${i}`}>
-                          <Link
-                            href={`/blogs?page=1&category=${
-                              cd.id
-                            }&${cd.localizations
-                              .map((l) => `category=${l.id}`)
-                              .join("&")}`}
-                          >
-                            <a className="d-flex">
-                              <p>{cd.name}</p>
-                              <p>({cd.blogs && cd.blogs.length})</p>
-                            </a>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  {categoriesData &&
+                    categoriesData.data &&
+                    !!categoriesData.data.length && (
+                      <ul className="list cat-list">
+                        {categoriesData.data.map((cd, i) => (
+                          <li key={`category${i}`}>
+                            <Link
+                              href={`/blogs?page=1&category=${
+                                cd.id
+                              }&${cd.localizations
+                                .map((l) => `category=${l.id}`)
+                                .join("&")}`}
+                            >
+                              <a className="d-flex">
+                                <p>{cd.name}</p>
+                                <p style={{ marginLeft: 4 }}>
+                                  ({cd.blogs && cd.blogs.length})
+                                </p>
+                              </a>
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                 </aside>
 
                 {/* <aside className="single_sidebar_widget newsletter_widget">
@@ -174,6 +206,11 @@ const Blog = ({
 };
 
 export const getServerSideProps = async (context) => {
+  const isCsr =
+    !context ||
+    !context.req ||
+    (context.req.url && context.req.url.startsWith("/_next/data"));
+
   const localizations = Array.isArray(context.query.localizations)
     ? context.query.localizations.map((l) => {
         const array = l.split("-");
@@ -202,53 +239,47 @@ export const getServerSideProps = async (context) => {
       })()
     : [];
 
-  const localization = localizations.find((l) => l.locale === context.locale);
+  if (!isCsr) {
+    try {
+      const localization = localizations.find(
+        (l) => l.locale === context.locale
+      );
 
-  try {
-    const blogDataServer = await axios.get(
-      appendFullStrapiUrl(
-        `${ENPOINT_FIND_BLOGS}/${
-          localization ? localization.id : context.params.id
-        }`,
-        {
+      const blogDataServer = await serviceFindBlog({
+        params: { id: localization ? localization.id : context.params.id },
+        query: { _locale: context.locale },
+      });
+      const categoriesDataServer = await serviceFindCategories({
+        query: {
           _locale: context.locale,
-        }
-      )
-    );
-    const categoriesDataServer = await axios.get(
-      appendFullStrapiUrl(ENPOINT_FIND_CATEGORIES, {
-        _locale: context.locale,
-      })
-    );
+        },
+      });
 
-    return {
-      props: {
-        ...(await serverSideTranslations(context.locale, [
-          "header",
-          "footer",
-          "blog",
-        ])),
-        blogDataServer: blogDataServer.data,
-        localizations,
-        params: context.params,
-        categoriesDataServer: categoriesDataServer.data,
-      },
-    };
-  } catch (error) {
-    return {
-      props: {
-        ...(await serverSideTranslations(context.locale, [
-          "header",
-          "footer",
-          "blog",
-        ])),
-        blogDataServer: {},
-        localizations: [],
-        params: context.params,
-        categoriesDataServer: [],
-      },
-    };
+      return {
+        props: {
+          ...(await serverSideTranslations(context.locale, [
+            "header",
+            "footer",
+            "blog",
+          ])),
+          blogDataServer: blogDataServer,
+          categoriesDataServer: categoriesDataServer,
+          localizations,
+        },
+      };
+    } catch (error) {}
   }
+
+  return {
+    props: {
+      ...(await serverSideTranslations(context.locale, [
+        "header",
+        "footer",
+        "blog",
+      ])),
+      localizations,
+    },
+  };
 };
 
 export default Blog;
