@@ -43,6 +43,7 @@ const Blogs = ({ blogsDataServer, blogsCountServer, categoriesDataServer }) => {
         _limit: BLOGS_PAGE_LIMIT,
         _locale: router.locale,
         title_contains: router.query.title,
+        _sort: "published_at:DESC",
         ...(router.query.category
           ? {
               "categories.id_in": router.query.category,
@@ -142,12 +143,12 @@ const Blogs = ({ blogsDataServer, blogsCountServer, categoriesDataServer }) => {
                       key={`blog${i}`}
                       imgUrl={bd.image ? appendFullStrapiUrl(bd.image.url) : ""}
                       day={formatDate({
-                        value: bd.updatedAt,
+                        value: bd.published_at,
                         formatStr: "dd",
                         type: "utc",
                       })}
                       month={formatDate({
-                        value: bd.updatedAt,
+                        value: bd.published_at,
                         formatStr: getValueByLocale(router.locale),
                         type: "utc",
                       })}
@@ -286,6 +287,7 @@ export const getServerSideProps = async (context) => {
           _limit: BLOGS_PAGE_LIMIT,
           _locale: context.locale,
           title_contains: context.query.title,
+          _sort: "published_at:DESC",
           ...(context.query.category
             ? {
                 "categories.id_in": context.query.category,

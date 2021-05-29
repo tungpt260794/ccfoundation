@@ -32,6 +32,7 @@ const ProjectsUpcoming = ({ projectsDataServer, projectsCountServer }) => {
         _limit: PROJECTS_PAGE_LIMIT,
         _locale: router.locale,
         completed: false,
+        _sort: "published_at:DESC",
       },
     });
     const _projectsCount = await serviceCountProjects({
@@ -143,6 +144,7 @@ export const getServerSideProps = async (context) => {
           _limit: PROJECTS_PAGE_LIMIT,
           _locale: context.locale,
           completed: false,
+          _sort: "published_at:DESC",
         },
       });
       const projectsCountServer = await serviceCountProjects({
