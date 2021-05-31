@@ -84,6 +84,14 @@ const Footer = () => {
             <Link href="/blogs?page=1">
               <a>{t("blogs")}</a>
             </Link>
+            <br />
+            <Link href="/terms-of-use">
+              <a>{t("terms-of-use")}</a>
+            </Link>
+            <br />
+            <Link href="/privacy-and-security">
+              <a>{t("privacy-and-security")}</a>
+            </Link>
           </p>
         ),
       },

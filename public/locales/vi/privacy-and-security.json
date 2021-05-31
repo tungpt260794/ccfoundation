@@ -1,0 +1,53 @@
+{
+  "head-title": "Privacy and Security",
+  "slogan": {
+    "title": "Privacy and Security"
+  },
+  "post": {
+    "description-1": "Khi cung cấp dịch vụ cho người sử dụng dù khách hàng cá nhân hay đại diện của khách hàng tổ chức, CC Foundation có thể phải thu thập thông tin cá nhân của người sử dụng. Để duy trì sự tin tưởng của người sử dụng, CC Foundation cam kết bảo quản những thông tin cá nhân trên một cách thích hợp bằng việc tuân thủ chính sách bảo mật dưới đây.",
+    "description-2": "Chính sách này quy định cách thức và các loại thông tin cá nhân mà CC Foundation thu thập được về người sử dụng trang thông tin điện tử của CC Foundation, các trường hợp mà CC Foundation chia sẻ, tiết lộ thông tin và các biện pháp được thực hiện để đảm bảo bí mật thông tin. Trong Chính sách này, cụm từ “CC Foundation” được hiểu là “CC Foundation” cùng các chi nhánh, văn phòng đại diện (nếu có) của CC Foundation.",
+    "sub-1": "1. Bảo mật thông tin của người sử dụng trên trang thông tin điện tử của CC Foundation",
+    "content-1": {
+      "li-1": "- Khi truy cập vào trang thông tin điện tử của CC Foundation, người sử dụng phải chấp nhận các điều khoản của Chính sách bảo mật này. Chính sách này có thể được CC Foundation điều chính tùy từng thời điểm mà không cần thông báo trước với người sử dụng. Bất kì sự thay đổi hay cập nhật sẽ có hiệu lực ngay lập tức kể từ khi được đăng lên trang thông tin điện tử. Người sử dụng đồng ý truy cập thường xuyên vào trang thông tin điện tử này đồng nghĩa với việc người sử dụng đồng ý với các thay đổi đó.",
+      "li-2": "- Chính sách này không được áp dụng khi CC Foundation tiếp cận thông tin dưới hình thức khác, chẳng hạn khi người sử dụng giao dịch với nhân viên tại chi nhánh hoặc liên lạc qua điện thoại. Trong trường hợp này, các chính sách bảo mật khác sẽ được áp dụng.",
+      "li-3": "- Chính sách này cũng không áp dụng đối với các thông tin mà người sử dụng cung cấp cho các trang web của bên thứ ba nơi hiển thị quảng cáo trực tuyến của CC Foundation hoặc truy cập vào các trang thông tin điện tử của bên thứ ba mà CC Foundation không vận hành hoặc kiểm soát. Xin vui lòng đọc chính sách bảo mật và các điều khoản điều kiện của các trang thông tin điện tử của bên thứ ba và cân nhắc xem họ có bảo vệ thỏa đáng quyền lợi của người sử dụng hay không."
+    },
+    "sub-2": "2. Thông tin mà CC Foundation thu thập",
+    "content-2": {
+      "li-1": "CC Foundation thu thập hai loại thông tin trực tuyến: phi cá nhân và cá nhân.",
+      "li-2": "1. Thông tin phi cá nhân",
+      "li-3": "Khi người sử dụng truy cập trang thông tin điện tử của CC Foundation, CC Foundation tự động ghi lại thông tin chi tiết về việc truy cập (địa chỉ IP của người sử dụng, các loại phần mềm trình duyệt được sử dụng, ngày và thời gian của các lần truy cập). CC Foundation cũng thu thập thông tin liên quan đến máy tính hoặc thiết bị di động (\"Thiết bị\") được sử dụng để truy cập vào trang thông tin điện tử này, chẳng hạn như hệ điều hành, tên model cũng như cấu hình và thông số cài đặt.",
+      "li-4": "2. Thông tin cá nhân",
+      "li-5": "CC Foundation thu thập thông tin cá nhân khi người sử dụng tự nguyện điền thông tin vào các biểu mẫu trên trang thông tin điện tử.",
+      "li-6": "Thông tin trên có thể bao gồm: Họ và tên, địa chỉ và các chi tiết liên lạc khác; tuổi, nghề nghiệp, tình trạng hôn nhân; số hộ chiếu, chứng minh nhân dân hoặc giấy phép lái xe, mã số thuế, v.v"
+    },
+    "sub-3": "3. Cách CC Foundation sử dụng thông tin",
+    "content-3": {
+      "li-1": "CC Foundation có thể sử dụng thông tin cá nhân của người sử dụng để:",
+      "li-2": "- Quản trị, vận hành, hỗ trợ và quản lý mối quan hệ, giao dịch và/hoặc tài khoản của người sử dụng với CC Foundation. Điều này có thể bao gồm việc chia sẻ thông tin trong nội bộ cũng như tiết lộ thông tin đó cho các bên thứ ba như quy định tại Mục 5 dưới đây.",
+      "li-3": "- Liên lạc với người sử dụng, nếu có thể, hoặc người được ủy quyền của người sử dụng bằng đường bưu điện, điện thoại, thư điện tử, fax...liên quan đến mối quan hệ, giao dịch và/hoặc tài khoản của người sử dụng.",
+      "li-4": "- Cung cấp cho người sử dụng những thông tin, đề xuất hoặc ý kiến của CC Foundation;",
+      "li-5": "- Hỗ trợ cho các hoạt động của CC Foundation, bao gồm việc đánh giá và quản lý rủi ro và tuân thủ quy định của CC Foundation và của pháp luật. Nếu giao dịch của người sử dụng với CC Foundation chấm dứt, CC Foundation sẽ vẫn tiếp tục xử lý các thông tin cá nhân của người sử dụng, trong phạm vi CC Foundation có thể, như được miêu tả trong Chính sách này."
+    },
+    "sub-4": "4. Cách CC Foundation bảo vệ thông tin cá nhân của người sử dụng",
+    "content-4": {
+      "li-1": "- CC Foundation sử dụng biện pháp bảo mật, phù hợp với luật pháp hiện hành, để bảo vệ thông tin cá nhân đối với việc truy cập hoặc sử dụng trái phép. Tuy nhiên, bản chất mở của hệ thống thông tin toàn cầu là thông tin cá nhân có thể bị lan truyền vượt ngoài tầm kiểm soát của các biện pháp an ninh mà CC Foundation sử dụng; và thông tin có thể bị truy cập và sử dụng bởi những người khác mà không phải là người cần thiết được nhận thông tin đó.",
+      "li-2": "- Để bảo vệ chống lại sự truy cập trái phép thông tin cá nhân của bên thứ ba, tất cả các thông tin cá nhân điện tử sẽ được CC Foundation lưu giữ trên hệ thống được bảo vệ bởi kiến trúc mạng an toàn có chứa các bức tường lửa và thiết bị phát hiện xâm nhập. Các máy chủ lưu giữ thông tin cá nhân được \"sao lưu\" (ghi lại) một cách thường xuyên bằng mọi nỗ lực để tránh việc vô ý tẩy xóa hoặc phá hủy thông tin cá nhân, và được lưu trữ trong hệ thống an ninh và hệ thống phản ứng thích hợp.",
+      "li-3": "- Khi người sử dụng liên hệ CC Foundation để hỏi về trang thông tin điện tử hoặc dịch vụ, CC Foundation có thể xác nhận danh tính của người sử dụng trên điện thoại trước khi trao đổi thông tin. Các câu hỏi và câu trả lời mà người sử dụng chọn khi đăng nhập vào trang thông tin điện tử này lần đầu tiên sẽ được sử dụng cho quá trình nhận dạng này."
+    },
+    "sub-5": "5. Các trường hợp CC Foundation được phép tiết lộ thông tin",
+    "content-5": {
+      "li-1": "1. CC Foundation có thể tiết lộ, chia sẻ thông tin cá nhân của khách hàng cho các chi nhánh, văn phòng đại diện của CC Foundation theo quy định pháp luật để thực hiện việc cung cấp các dịch vụ.",
+      "li-2": "2. CC Foundation cũng có thể chia sẻ thông tin cá nhân với các cơ quan chính phủ và cơ quan thực thi pháp luật khi được yêu cầu hoặc theo quy định của pháp luật, quy tắc, quy định hay quy trình pháp lý, bao gồm nhưng không giới hạn, báo cáo cho các cơ quan chính phủ hoặc thực thi bất kỳ nghĩa vụ nào mà CC Foundation có thể có khi cần thiết, chẳng hạn như cung cấp thông tin theo yêu cầu của tòa án hoặc cơ quan có thẩm quyền.",
+      "li-3": "3. CC Foundation có thể tiết lộ thông tin cá nhân của người sử dụng (i) cho kiểm toán viên nội bộ hoặc kiểm toán viên bên ngoài hoặc luật sư của CC Foundation; (ii) khi CC Foundation cho rằng việc tiết lộ thông tin là cần thiết hoặc thích hợp để ngăn chặn thiệt hại về thể chất hoặc tổn thất tài chính đi kèm một cuộc điều tra về các giao dịch bất hợp pháp hoặc nghi ngờ là bất hợp pháp.",
+      "li-4": "4. CC Foundation có thể tiết lộ hoặc chia sẻ thông tin cá nhân về đối tác của mình cho bên thứ ba độc lập mà CC Foundation đã ký hợp đồng để cung cấp dịch vụ thay mặt của CC Foundation, CC Foundation sẽ yêu cầu bên thứ ba đồng ý tuân thủ các tiêu chuẩn bảo mật và an ninh thích hợp hoặc cam kết cung cấp mức độ bảo mật tương tự và hợp lý như CC Foundation khi xử lý thông tin cá nhân. Ngoài ra, CC Foundation có thể chia sẻ cho một pháp nhân kế nhiệm trong trường hợp sáp nhập, mua lại hoặc giao dịch tương tự thông tin cá nhân và thông tin khác thu thập thông qua trang thông tin điện tử và thông qua việc cung cấp dịch vụ."
+    },
+    "sub-6": "6. Quyền lợi của người sử dụng",
+    "content-6": "Khi cung cấp thông tin cá nhân cho CC Foundation, người sử dụng có quyền truy cập vào bất kỳ dữ liệu cá nhân của họ được lưu giữ bởi CC Foundation bằng cách gửi văn bản đề nghị đến CC Foundation. Người sử dụng sẽ được cung cấp quyền truy cập hợp lý để tiếp cận thông tin của mình và khi cần thiết có thể điều chỉnh và loại bỏ các thông tin không chính xác theo quy định của CC Foundation. CC Foundation sẽ hợp tác trong việc cung cấp quyền truy cập đó. Người sử dụng có trách nhiệm bảo mật tuyệt đối mật khẩu truy nhập vào trang thông tin điện tử này. Trong trường hợp mật khẩu bị mất cắp hoặc nghi ngờ đã để lộ, người sử dụng phải ngay lập tức gửi thư điện tử thông báo cho CC Foundation. Trong vòng 24 (hai mươi bốn) giờ kể từ khi nhận được yêu cầu đó, CC Foundation sẽ tiến hành kích hoạt lại mật khẩu truy cập và thông báo cho người sử dụng. Việc người sử dụng không thông báo hoặc chậm thông báo cho CC Foundation về việc mật khẩu bị mất hoặc nghi ngờ bị mất sẽ là căn cứ hợp lý loại bỏ/miễn trừ trách nhiệm của CC Foundation đối với bất kỳ thiệt hại, tổn thất nào đối với thông tin của người sử dụng.",
+    "sub-7": "7. Các quy định khác",
+    "content-7": {
+      "li-1": "- Các điều khoản của Chính sách này là một phần của bất kỳ điều khoản nào khác mà người sử dụng đã ký/thỏa thuận với CC Foundation như các chính sách, thông báo bảo mật và bất kỳ quy định pháp luật hiện hành bắt buộc áp dụng.",
+      "li-2": "- CC Foundation có thể thỉnh thoảng liên lạc với người sử dụng qua đường bưu điện, điện thoại, thư điện tử, fax… để cung cấp thông tin về sản phẩm, dịch vụ mà CC Foundation tin rằng người sử dụng quan tâm đến. Nếu người sử dụng không muốn được liên lạc theo cách này, hoặc nếu người sử dụng muốn thực hiện các quyền của mình về điều chỉnh và truy cập thông tin, hoặc nếu người sử dụng cần thêm thông tin liên quan đến chính sách bảo mật, vui lòng liên hệ CC Foundation."
+    }
+  }
+}

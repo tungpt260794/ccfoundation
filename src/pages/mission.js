@@ -36,6 +36,9 @@ const Mission = () => {
             <div className="col-xl-12 col-md-12">
               <div className="about_text_info">
                 <p>{t("post.content-1")}</p>
+                <p>
+                  <b>{t("post.content-2")}</b>
+                </p>
               </div>
             </div>
           </div>

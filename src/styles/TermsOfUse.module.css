@@ -1,0 +1,9 @@
+.contentWrapper ul li {
+  list-style: unset;
+  list-style-type: none;
+  padding: 4px 0;
+}
+
+.contentWrapper ul li ul {
+  padding-left: 20px;
+}
