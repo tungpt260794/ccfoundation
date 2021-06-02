@@ -7,3 +7,7 @@
 .contentWrapper ul li ul {
   padding-left: 20px;
 }
+
+.contentWrapper b {
+  color: #b00006;
+}
