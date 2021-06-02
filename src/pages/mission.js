@@ -37,7 +37,7 @@ const Mission = () => {
               <div className="about_text_info">
                 <p>{t("post.content-1")}</p>
                 <p>
-                  <b>{t("post.content-2")}</b>
+                  <b style={{ color: "#b00006" }}>{t("post.content-2")}</b>
                 </p>
               </div>
             </div>
