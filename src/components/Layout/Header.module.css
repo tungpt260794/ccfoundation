@@ -19,10 +19,18 @@
   opacity: 0.4;
 }
 
+.logo {
+  width: 150px;
+}
+
 @media (max-width: 990px) {
   .multiLang {
     position: absolute;
     right: 20px;
     top: -65px;
+  }
+
+  .logo {
+    width: 130px;
   }
 }

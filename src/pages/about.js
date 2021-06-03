@@ -5,6 +5,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import Layout from "components/Layout";
 import BannerSmall from "components/area/BannerSmall";
+import PersonArea from "components/area/PersonArea";
 
 const About = () => {
   const { t } = useTranslation("about");
@@ -42,6 +43,37 @@ const About = () => {
               <div className="about_text_info">
                 <p>{t("post.content-2")}</p>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="volunteers_area" style={{ paddingTop: 0 }}>
+        <div className="container">
+          <div className="row">
+            <div className="col-xl-12">
+              <div className="section_title text-center mb-60">
+                <h3 style={{ fontWeight: 500 }}>{t("volunteers-title")}</h3>
+              </div>
+            </div>
+          </div>
+          <div
+            className="row"
+            style={{ display: "flex", justifyContent: "center" }}
+          >
+            <div className="col-xl-3 col-md-4">
+              <PersonArea
+                imgUrl="/templates/img/volunteers/2.png"
+                name="Anila Miller"
+                position="Volunteer & Donner"
+              />
+            </div>
+            <div className="col-xl-3 col-md-4">
+              <PersonArea
+                imgUrl="/templates/img/volunteers/2.png"
+                name="Anila Miller"
+                position="Volunteer & Donner"
+              />
             </div>
           </div>
         </div>

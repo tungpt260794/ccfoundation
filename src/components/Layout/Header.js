@@ -99,7 +99,7 @@ const Header = () => {
 
   return (
     <header>
-      <div className="header-area ">
+      <div className="header-area">
         <div id="sticky-header" className="main-header-area">
           <div className="container-fluid p-0">
             <div className="row align-items-center justify-content-between no-gutters">
@@ -107,7 +107,11 @@ const Header = () => {
                 <div className="logo-img">
                   <Link href="/">
                     <a>
-                      <img src="/images/logo.png" alt="" width="130px" />
+                      <img
+                        className={styles.logo}
+                        src="/images/logo.png"
+                        alt=""
+                      />
                     </a>
                   </Link>
                 </div>

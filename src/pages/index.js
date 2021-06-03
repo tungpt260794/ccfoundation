@@ -34,6 +34,7 @@ const Home = () => {
         variant="small"
         title={t("slogan.title")}
         backgroundUrl="/images/home-banner.png"
+        isMove={true}
       />
 
       <PostBig
