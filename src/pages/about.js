@@ -63,16 +63,16 @@ const About = () => {
           >
             <div className="col-xl-3 col-md-4">
               <PersonArea
-                imgUrl="/templates/img/volunteers/2.png"
-                name="Anila Miller"
-                position="Volunteer & Donner"
+                imgUrl="/images/bach-ngoc-an.png"
+                name={t("persons.name1")}
+                position={t("persons.position1")}
               />
             </div>
             <div className="col-xl-3 col-md-4">
               <PersonArea
-                imgUrl="/templates/img/volunteers/2.png"
-                name="Anila Miller"
-                position="Volunteer & Donner"
+                imgUrl="/images/vo-hang-phuong.png"
+                name={t("persons.name2")}
+                position={t("persons.position2")}
               />
             </div>
           </div>

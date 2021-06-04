@@ -30,7 +30,10 @@ const PersonArea = ({
           </ul>
         </div>
       </div>
-      <div className="author_name text-center">
+      <div
+        style={{ whiteSpace: "pre-line" }}
+        className="author_name text-center"
+      >
         <h3>{name}</h3>
         <span>{position}</span>
       </div>
