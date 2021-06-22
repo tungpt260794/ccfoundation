@@ -11,6 +11,8 @@
   },
   "persons": {
     "name1": "Mr. Bach Ngoc An",
-    "name2": "Mrs. Vo Hang Phuong"
+    "position1": "",
+    "name2": "Mrs. Vo Hang Phuong",
+    "position2": ""
   }
 }
