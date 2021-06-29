@@ -41,6 +41,10 @@ const Header = () => {
             label: t("activity-history"),
             link: "/history",
           },
+          {
+            label: t("our-advisors"),
+            link: "/advisors",
+          },
         ],
       },
       {

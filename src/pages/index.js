@@ -1,7 +1,9 @@
 import Head from "next/head";
+import { useRouter } from "next/router";
 
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useState, useEffect, useCallback } from "react";
 
 import Layout from "components/Layout";
 // import BannerBig from "components/area/BannerBig";
@@ -10,9 +12,46 @@ import PostBig from "components/area/PostBig";
 // import SliderSmall from "components/area/SliderSmall";
 // import DonateSmall from "components/area/DonateSmall";
 import BannerSmall from "components/area/BannerSmall";
+import Loader from "components/other/Loader";
+import Blog from "components/area/Blog";
+import PersonArea from "components/area/PersonArea";
 
-const Home = () => {
+import getValueByLocale from "utils/helpers/getValueByLocale";
+import { serviceFindBlogs } from "utils/services";
+import formatDate from "utils/helpers/formatDate";
+import appendFullStrapiUrl from "utils/helpers/appendFullStrapiUrl";
+
+const Home = ({ blogsDataServer }) => {
   const { t } = useTranslation("home");
+  const router = useRouter();
+  const [blogsData, setBlogsData] = useState(blogsDataServer);
+  const [loading, setLoading] = useState(true);
+
+  const getData = useCallback(async () => {
+    const _blogsData = await serviceFindBlogs({
+      initData: blogsDataServer ? blogsDataServer.data : null,
+      query: {
+        _start: 0,
+        _limit: 1,
+        _locale: router.locale,
+        _sort: "published_at:DESC",
+      },
+    });
+
+    setBlogsData(_blogsData);
+
+    setLoading(false);
+  }, [
+    serviceFindBlogs,
+    setBlogsData,
+    setLoading,
+    router.locale,
+    blogsDataServer,
+  ]);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   return (
     <Layout>
@@ -46,6 +85,74 @@ const Home = () => {
         linkLabel={t("aboutUs.link-label")}
       />
 
+      <div className="about_area gray-bg">
+        <div className="container">
+          <div className="row align-items-center">
+            <div className="col-xl-12">
+              {blogsData && blogsData.data && !!blogsData.data.length && (
+                <div className="blog_left_sidebar">
+                  {blogsData.data.map((bd, i) => (
+                    <Blog
+                      key={`blog${i}`}
+                      imgUrl={bd.image ? appendFullStrapiUrl(bd.image.url) : ""}
+                      day={formatDate({
+                        value: bd.published_at,
+                        formatStr: "dd",
+                        type: "utc",
+                      })}
+                      month={formatDate({
+                        value: bd.published_at,
+                        formatStr: getValueByLocale(router.locale),
+                        type: "utc",
+                      })}
+                      blogUrl={`/blog/${bd.id}?localizations=${bd.id}-${
+                        bd.locale
+                      }&${bd.localizations
+                        .map((l) => `localizations=${l.id}-${l.locale}`)
+                        .join("&")}`}
+                      title={bd.title}
+                      description={bd.description}
+                    />
+                  ))}
+                </div>
+              )}
+              {loading && <Loader />}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="volunteers_area" style={{ paddingTop: 60 }}>
+        <div className="container">
+          <div className="row">
+            <div className="col-xl-12">
+              <div className="section_title text-center mb-60">
+                <h3 style={{ fontWeight: 500 }}>{t("volunteers-title")}</h3>
+              </div>
+            </div>
+          </div>
+          <div
+            className="row"
+            style={{ display: "flex", justifyContent: "center" }}
+          >
+            <div className="col-xl-3 col-md-4">
+              <PersonArea
+                imgUrl="/images/bach-ngoc-an.png"
+                name={t("persons.name1")}
+                position={t("persons.position1")}
+              />
+            </div>
+            <div className="col-xl-3 col-md-4">
+              <PersonArea
+                imgUrl="/images/vo-hang-phuong.png"
+                name={t("persons.name2")}
+                position={t("persons.position2")}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* <SliderSmall
         type={t("projectsUpcoming.type")}
         title={t("projectsUpcoming.title")}
@@ -71,10 +178,43 @@ const Home = () => {
   );
 };
 
-export const getStaticProps = async ({ locale }) => {
+export const getStaticProps = async (context) => {
+  const isCsr =
+    !context ||
+    !context.req ||
+    (context.req.url && context.req.url.startsWith("/_next/data"));
+
+  if (!isCsr) {
+    try {
+      const blogsDataServer = await serviceFindBlogs({
+        query: {
+          _start: 0,
+          _limit: 1,
+          _locale: context.locale,
+          _sort: "published_at:DESC",
+        },
+      });
+
+      return {
+        props: {
+          ...(await serverSideTranslations(context.locale, [
+            "header",
+            "footer",
+            "home",
+          ])),
+          blogsDataServer: blogsDataServer,
+        },
+      };
+    } catch (error) {}
+  }
+
   return {
     props: {
-      ...(await serverSideTranslations(locale, ["header", "footer", "home"])),
+      ...(await serverSideTranslations(context.locale, [
+        "header",
+        "footer",
+        "home",
+      ])),
     },
   };
 };

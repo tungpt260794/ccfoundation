@@ -3,21 +3,185 @@ import Head from "next/head";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import classnames from "classnames";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 import Layout from "components/Layout";
 import BannerSmall from "components/area/BannerSmall";
-import InputSimple from "components/FormControl/InputSimple";
-import TextareaSimple from "components/FormControl/TextareaSimple";
 import ButtonSimple from "components/FormControl/ButtonSimple";
+import FormControl from "components/FormControl";
 
-import { mutateCreateGrantApplication } from "utils/hooks";
+import { serviceCreateGrantApplication } from "utils/services";
 
 import styles from "styles/SignUpProject.module.css";
 
 const SignUpProject = () => {
   const { t } = useTranslation("sign-up-project");
   const [values, setValues] = useState({});
+  const [errors, setErrors] = useState({});
+  const [accepted, setAccepted] = useState(false);
+  const [errorAccept, setErrorAccept] = useState("");
+
+  const inputsRegister = useMemo(() => {
+    const _inputs = [
+      {
+        type: "text",
+        id: "nameRegister",
+        name: "nameRegister",
+        label: t("contact.form-register.label-nameRegister"),
+        placeholder: t("contact.form-register.placeholder-nameRegister"),
+        required: true,
+      },
+      {
+        type: "text",
+        id: "addressRegister",
+        name: "addressRegister",
+        label: t("contact.form-register.label-addressRegister"),
+        placeholder: t("contact.form-register.placeholder-addressRegister"),
+        required: true,
+      },
+      {
+        type: "text",
+        id: "emailRegister",
+        name: "emailRegister",
+        label: t("contact.form-register.label-emailRegister"),
+        placeholder: t("contact.form-register.placeholder-emailRegister"),
+        required: true,
+      },
+      {
+        type: "text",
+        id: "phoneRegister",
+        name: "phoneRegister",
+        label: t("contact.form-register.label-phoneRegister"),
+        placeholder: t("contact.form-register.placeholder-phoneRegister"),
+        required: true,
+      },
+      {
+        type: "text",
+        id: "websiteRegister",
+        name: "websiteRegister",
+        label: t("contact.form-register.label-websiteRegister"),
+        placeholder: t("contact.form-register.placeholder-websiteRegister"),
+        required: true,
+      },
+    ];
+
+    return _inputs;
+  }, []);
+
+  const inputsProject = useMemo(() => {
+    const _inputs = [
+      {
+        type: "text",
+        id: "nameProject",
+        name: "nameProject",
+        label: t("contact.form-project.label-nameProject"),
+        placeholder: t("contact.form-project.placeholder-nameProject"),
+        required: true,
+      },
+      {
+        type: "textarea",
+        id: "descriptionProject",
+        name: "descriptionProject",
+        label: t("contact.form-project.label-descriptionProject"),
+        placeholder: t("contact.form-project.placeholder-descriptionProject"),
+        required: true,
+      },
+      {
+        type: "date",
+        id: "estimatedDateCompleteProject",
+        name: "estimatedDateCompleteProject",
+        label: t("contact.form-project.label-estimatedDateCompleteProject"),
+        placeholder: t(
+          "contact.form-project.placeholder-estimatedDateCompleteProject"
+        ),
+        required: true,
+      },
+      {
+        type: "textarea",
+        id: "potentialImpactProject",
+        name: "potentialImpactProject",
+        label: t("contact.form-project.label-potentialImpactProject"),
+        placeholder: t(
+          "contact.form-project.placeholder-potentialImpactProject"
+        ),
+        required: true,
+      },
+      {
+        type: "textarea",
+        id: "organizationStrengthPriorityProject",
+        name: "organizationStrengthPriorityProject",
+        label: t(
+          "contact.form-project.label-organizationStrengthPriorityProject"
+        ),
+        placeholder: t(
+          "contact.form-project.placeholder-organizationStrengthPriorityProject"
+        ),
+        required: true,
+      },
+      {
+        type: "textarea",
+        id: "fundraisingPlanProject",
+        name: "fundraisingPlanProject",
+        label: t("contact.form-project.label-fundraisingPlanProject"),
+        placeholder: t(
+          "contact.form-project.placeholder-fundraisingPlanProject"
+        ),
+      },
+      {
+        type: "textarea",
+        id: "additionalInformationProject",
+        name: "additionalInformationProject",
+        label: t("contact.form-project.label-additionalInformationProject"),
+        placeholder: t(
+          "contact.form-project.placeholder-additionalInformationProject"
+        ),
+        required: true,
+      },
+    ];
+
+    return _inputs;
+  }, []);
+
+  const inputsBudget = useMemo(() => {
+    const _inputs = [
+      {
+        type: "currency",
+        id: "amountBudget",
+        name: "amountBudget",
+        label: t("contact.form-budget.label-amountBudget"),
+        placeholder: t("contact.form-budget.placeholder-amountBudget"),
+        required: true,
+        onChange: (e) => {
+          const _value = e.target.value;
+          const _name = e.target.name;
+
+          setValues((prev) => ({
+            ...prev,
+            [_name]: Number(_value),
+          }));
+        },
+      },
+      {
+        type: "currency",
+        id: "totalBudget",
+        name: "totalBudget",
+        label: t("contact.form-budget.label-totalBudget"),
+        placeholder: t("contact.form-budget.placeholder-totalBudget"),
+        required: true,
+        onChange: (e) => {
+          const _value = e.target.value;
+          const _name = e.target.name;
+
+          setValues((prev) => ({
+            ...prev,
+            [_name]: Number(_value),
+          }));
+        },
+      },
+    ];
+
+    return _inputs;
+  }, [setValues]);
 
   return (
     <Layout>
@@ -35,13 +199,17 @@ const SignUpProject = () => {
 
       <div className="about_page">
         <div className="container">
+          {/* Register form */}
           <div className="row">
             <div className="col-xl-12">
               <div className="about_info">
                 <h3>{t("contact.title")}</h3>
+                <h4>{t("contact.form-title1")}</h4>
+                <h6>{t("contact.form-subtitle1")}</h6>
               </div>
             </div>
           </div>
+          <br />
           <div className="row">
             <div
               className={classnames({
@@ -49,63 +217,220 @@ const SignUpProject = () => {
                 [styles.formWrapper]: true,
               })}
             >
-              <InputSimple
-                name="fullName"
-                value={values.fullName || ""}
-                type="text"
-                placeholder={t("contact.input-name-placeholder")}
+              {inputsRegister.map((ip, i) => (
+                <FormControl
+                  key={`register${i}`}
+                  type={ip.type}
+                  id={ip.id}
+                  name={ip.name}
+                  label={ip.label}
+                  error={errors[ip.name]}
+                  placeholder={ip.placeholder}
+                  value={values[ip.name] || ""}
+                  onChange={(e) => {
+                    setValues((prev) => ({
+                      ...prev,
+                      [ip.name]: e.target.value,
+                    }));
+                  }}
+                  required={ip.required}
+                  {...ip}
+                />
+              ))}
+            </div>
+          </div>
+          <br />
+          {/* Project form */}
+          <div className="row">
+            <div className="col-xl-12">
+              <div className="about_info">
+                <h4>{t("contact.form-title2")}</h4>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div className="row">
+            <div
+              className={classnames({
+                ["col-xl-6"]: true,
+                [styles.formWrapper]: true,
+              })}
+            >
+              {inputsProject.map((ip, i) => (
+                <FormControl
+                  key={`project${i}`}
+                  type={ip.type}
+                  id={ip.id}
+                  name={ip.name}
+                  label={ip.label}
+                  error={errors[ip.name]}
+                  placeholder={ip.placeholder}
+                  value={values[ip.name] || ""}
+                  onChange={(e) => {
+                    setValues((prev) => ({
+                      ...prev,
+                      [ip.name]: e.target.value,
+                    }));
+                  }}
+                  required={ip.required}
+                  {...ip}
+                />
+              ))}
+            </div>
+          </div>
+          <br />
+          {/* Budget form */}
+          <div className="row">
+            <div className="col-xl-12">
+              <div className="about_info">
+                <h4>{t("contact.form-title3")}</h4>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div className="row">
+            <div
+              className={classnames({
+                ["col-xl-6"]: true,
+                [styles.formWrapper]: true,
+              })}
+            >
+              {inputsBudget.map((ip, i) => (
+                <FormControl
+                  key={`project${i}`}
+                  type={ip.type}
+                  id={ip.id}
+                  name={ip.name}
+                  label={ip.label}
+                  error={errors[ip.name]}
+                  placeholder={ip.placeholder}
+                  value={values[ip.name] || ""}
+                  onChange={(e) => {
+                    setValues((prev) => ({
+                      ...prev,
+                      [ip.name]: e.target.value,
+                    }));
+                  }}
+                  required={ip.required}
+                  {...ip}
+                />
+              ))}
+            </div>
+          </div>
+          <br />
+          {/* Additional materials */}
+          <div className="row">
+            <div className="col-xl-12">
+              <div className="about_info">
+                <h4>{t("contact.form-title4")}</h4>
+                <h6>
+                  {`${t("contact.additional-materials")} `}
+                  <a
+                    style={{ color: "#007bff" }}
+                    href="mailto:tuananh@ccfoundation.org.vn"
+                  >
+                    tuananh@ccfoundation.org.vn
+                  </a>
+                  .
+                </h6>
+              </div>
+            </div>
+          </div>
+          <br />
+          {/* Required project updates */}
+          <div className="row">
+            <div className="col-xl-12">
+              <div className="about_info">
+                <h4>{t("contact.form-title5")}</h4>
+                <h6>{t("contact.required-project-updates")}</h6>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div className="row">
+            <div
+              className={classnames({
+                ["col-xl-6"]: true,
+                [styles.formWrapper]: true,
+              })}
+            >
+              <FormControl
+                type="checkbox"
+                id="accept"
+                name="accept"
+                label={t("contact.label-accept")}
+                error={errorAccept}
+                required={true}
                 onChange={(e) => {
-                  setValues((prev) => ({ ...prev, fullName: e.target.value }));
+                  setAccepted(e.target.checked);
                 }}
+                value="accept"
+                checked={accepted}
+                checkboxLabel={t("contact.label-checkbox-accept")}
               />
-              <InputSimple
-                name="phone"
-                value={values.phone || ""}
-                type="text"
-                placeholder={t("contact.input-phone-placeholder")}
-                onChange={(e) => {
-                  setValues((prev) => ({ ...prev, phone: e.target.value }));
-                }}
-              />
-              <InputSimple
-                name="email"
-                value={values.email || ""}
-                type="text"
-                placeholder={t("contact.input-email-placeholder")}
-                onChange={(e) => {
-                  setValues((prev) => ({ ...prev, email: e.target.value }));
-                }}
-              />
-              <TextareaSimple
-                name="content"
-                value={values.content || ""}
-                placeholder={t("contact.input-content-placeholder")}
-                onChange={(e) => {
-                  setValues((prev) => ({ ...prev, content: e.target.value }));
-                }}
-              />
+
               <ButtonSimple
                 type="button"
                 label={t("contact.btnLabel")}
                 onClick={async () => {
-                  if (
-                    values.fullName &&
-                    values.phone &&
-                    values.email &&
-                    values.content
-                  ) {
-                    await mutateCreateGrantApplication({ body: values });
+                  const _inputs = [
+                    ...inputsRegister,
+                    ...inputsProject,
+                    ...inputsBudget,
+                  ];
+                  const _errors = {};
+
+                  _inputs.forEach((ip) => {
+                    if (ip.required) {
+                      values[ip.name]
+                        ? (_errors[ip.name] = "")
+                        : (_errors[ip.name] = t("contact.typing-required"));
+                    }
+                  });
+
+                  setErrors((prev) => ({ ...prev, ..._errors }));
+
+                  const _errorsKeys = Object.keys(_errors);
+
+                  // Focus input error
+                  for (let i = 0; i < _errorsKeys.length; i++) {
+                    const _key = _errorsKeys[i];
+
+                    if (_errors[_key]) {
+                      document.getElementById(_key).focus();
+                      break;
+                    }
+                  }
+
+                  if (!accepted) {
+                    setErrorAccept(t("contact.select-required"));
+                  } else {
+                    setErrorAccept("");
+                  }
+
+                  // check valid
+                  let isValid = true;
+                  for (let i = 0; i < _errorsKeys.length; i++) {
+                    const _key = _errorsKeys[i];
+
+                    if (_errors[_key]) {
+                      isValid = false;
+                      break;
+                    }
+                  }
+
+                  if (accepted && isValid) {
+                    await serviceCreateGrantApplication({ body: values });
                     alert(t("sign-up-success"));
                     setValues({});
-                  } else {
-                    alert(t("require"));
                   }
                 }}
               />
             </div>
           </div>
           <br />
-          <div className="row">
+
+          {/* <div className="row">
             <div className="col-xl-12 col-md-12">
               <div className="about_text_info">
                 <p>
@@ -126,7 +451,7 @@ const SignUpProject = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

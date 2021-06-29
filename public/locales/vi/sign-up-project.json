@@ -6,14 +6,56 @@
     "title": "Đăng ký dự án"
   },
   "contact": {
-    "title": "Bạn có sáng kiến/chương trình/dự án mang lại giá trị phát triển bền vững cho cộng đồng và có nhu cầu hỗ trợ tài chính, xin vui lòng đăng ký",
-    "input-name-placeholder": "Nhập họ và tên",
-    "input-phone-placeholder": "Nhập số điện thoại",
-    "input-email-placeholder": "Nhập Email",
-    "input-content-placeholder": "Nhập nội dung",
-    "btnLabel": "Đăng ký",
+    "title": "Bạn có sáng kiến/chương trình/dự án mang lại giá trị phát triển bền vững cho cộng đồng và có nhu cầu hỗ trợ tài chính, xin vui lòng điền vào biểu dưới đây:",
+    "form-title1": "THÔNG TIN NGƯỜI ĐĂNG KÝ",
+    "form-subtitle1": "(* Thông tin bắt buộc cần điền)",
+    "form-register": {
+      "label-nameRegister": "Tên tổ chức hoặc họ và tên người đăng ký",
+      "placeholder-nameRegister": "Nhập tên tổ chức hoặc họ và tên người đăng ký",
+      "label-addressRegister": "Địa chỉ",
+      "placeholder-addressRegister": "Nhập địa chỉ",
+      "label-emailRegister": "Email",
+      "placeholder-emailRegister": "Nhập email",
+      "label-phoneRegister": "Số điện thoại",
+      "placeholder-phoneRegister": "Nhập số điện thoại",
+      "label-websiteRegister": "Website",
+      "placeholder-websiteRegister": "Nhập website"
+    },
+    "form-title2": "MÔ TẢ DỰ ÁN",
+    "form-project": {
+      "label-nameProject": "Tên dự án",
+      "placeholder-nameProject": "Nhập tên dự án",
+      "label-descriptionProject": "Mô tả sơ lược dự án cần hỗ trợ: mục đích triển khai, mục tiêu và các hoạt động, phương thức đo lường kết quả và tác động của dự án",
+      "placeholder-descriptionProject": "Nhập mô tả sơ lược dự án cần hỗ trợ: mục đích triển khai, mục tiêu và các hoạt động, phương thức đo lường kết quả và tác động của dự án",
+      "label-estimatedDateCompleteProject": "Ngày dự kiến hoàn thành dự án",
+      "placeholder-estimatedDateCompleteProject": "Nhập ngày dự kiến hoàn thành dự án",
+      "label-potentialImpactProject": "Tác động tiềm năng của dự án?",
+      "placeholder-potentialImpactProject": "Nhập tác động tiềm năng của dự án?",
+      "label-organizationStrengthPriorityProject": "Điểm mạnh và những ưu tiên của bạn/tổ chức của bạn?",
+      "placeholder-organizationStrengthPriorityProject": "Nhập điểm mạnh và những ưu tiên của bạn/tổ chức của bạn?",
+      "label-fundraisingPlanProject": "Kế hoạch huy động vốn tài trợ cho dự án? (Không bắt buộc)",
+      "placeholder-fundraisingPlanProject": "Nhập kế hoạch huy động vốn tài trợ cho dự án? (Không bắt buộc)",
+      "label-additionalInformationProject": "Thông tin bổ sung bạn muốn chia sẻ thêm?",
+      "placeholder-additionalInformationProject": "Nhập thông tin bổ sung bạn muốn chia sẻ thêm?"
+    },
+    "form-title3": "NGÂN SÁCH",
+    "form-budget": {
+      "label-amountBudget": "Số tiền mong muốn được tài trợ",
+      "placeholder-amountBudget": "Nhập số tiền mong muốn được tài trợ",
+      "label-totalBudget": "Tổng ngân sách dự án",
+      "placeholder-totalBudget": "Nhập tổng ngân sách dự án"
+    },
+    "form-title4": "TÀI LIỆU BỔ SUNG (KHÔNG BẮT BUỘC)",
+    "form-title5": "CẬP NHẬT THÔNG TIN DỰ ÁN THEO YÊU CẦU",
+    "btnLabel": "Gửi",
     "or": "hoặc vui lòng liên hệ",
     "name": "CC Foundation",
-    "address": "65 Cảm Hội, phường Đống Mác, quận Hai Bà Trưng, Hà Nội"
+    "address": "65 Cảm Hội, phường Đống Mác, quận Hai Bà Trưng, Hà Nội",
+    "additional-materials": "Bạn có thể gửi thêm các tài liệu bổ sung như thư giới thiệu hoặc hồ sơ cá nhân của các thành viên dự án về địa chỉ",
+    "required-project-updates": "Nếu dự án được chấp thuận tài trợ, bạn cần cung cấp thông tin cập nhật về dự án theo định kỳ (bao gồm báo cáo, ảnh hoặc video). Bạn cũng cần nộp báo cáo tổng kết dự án về các kết quả và thành tựu của dự án và tác động tới cộng đồng.",
+    "label-accept": "Vui lòng đánh dấu vào ô dưới đây",
+    "label-checkbox-accept": "Tôi đồng ý cung cấp thông tin cập nhật về dự án theo yêu cầu.",
+    "typing-required": "Thông tin bắt buộc phải điền",
+    "select-required": "Thông tin bắt buộc phải chọn"
   }
 }

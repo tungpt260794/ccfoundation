@@ -8,6 +8,7 @@ import findProjects from "./findProjects";
 import countProjects from "./countProjects";
 import findProject from "./findProject";
 import createGrantApplication from "./createGrantApplication";
+import createVolunteer from "./createVolunteer";
 
 const libs = { axios };
 
@@ -34,3 +35,6 @@ export const serviceFindProject = async (options = {}) =>
 
 export const serviceCreateGrantApplication = async (options = {}) =>
   await createGrantApplication(libs, options);
+
+export const serviceCreateVolunteer = async (options = {}) =>
+  await createVolunteer(libs, options);

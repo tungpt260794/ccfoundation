@@ -4,13 +4,16 @@
   align-items: center;
   background-color: #ffffff;
   width: 100%;
-  min-height: 200px;
+  height: fit-content;
 }
 
-.inputWrapper textarea {
+.inputWrapper > div {
+  width: 100%;
+}
+
+.inputWrapper input {
   width: 100%;
   border: none;
   outline: none;
   padding: 10px 20px 10px 20px;
-  min-height: 200px;
 }

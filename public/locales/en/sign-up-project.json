@@ -6,14 +6,56 @@
     "title": "Apply for a grant"
   },
   "contact": {
-    "title": "If you have an initiative that can create sustainable development values to the community and are in need of financial support, please fill in the form below to be considered for a grant.",
-    "input-name-placeholder": "Enter name",
-    "input-phone-placeholder": "Enter contact number",
-    "input-email-placeholder": "Enter email",
-    "input-content-placeholder": "Enter brief description of project/initiative",
-    "btnLabel": "Sign up",
+    "title": "If you have an initiative/program/project that can create sustainable development values to the community and are in need of financial support, please fill in the form below to be considered for a grant:",
+    "form-title1": "APPLICANT INFORMATION",
+    "form-subtitle1": "(* Indicates required field)",
+    "form-register": {
+      "label-nameRegister": "Personal/Organization full name",
+      "placeholder-nameRegister": "Enter Personal/Organization full name",
+      "label-addressRegister": "Address",
+      "placeholder-addressRegister": "Enter address",
+      "label-emailRegister": "Email",
+      "placeholder-emailRegister": "Enter email",
+      "label-phoneRegister": "Phone number",
+      "placeholder-phoneRegister": "Enter phone number",
+      "label-websiteRegister": "Website address",
+      "placeholder-websiteRegister": "Enter website address"
+    },
+    "form-title2": "PROJECT DESCRIPTION",
+    "form-project": {
+      "label-nameProject": "Project name",
+      "placeholder-nameProject": "Enter project name",
+      "label-descriptionProject": "Briefly summarize the project you are requesting funds for: purposes, objectives and activities. Describe how you will measure outcomes and impact",
+      "placeholder-descriptionProject": "Enter briefly summarize the project you are requesting funds for: purposes, objectives and activities. Describe how you will measure outcomes and impact",
+      "label-estimatedDateCompleteProject": "Expected date of project completion",
+      "placeholder-estimatedDateCompleteProject": "Enter Expected date of project completion",
+      "label-potentialImpactProject": "What are the potential impacts of this project?",
+      "placeholder-potentialImpactProject": "Enter what are the potential impacts of this project?",
+      "label-organizationStrengthPriorityProject": "What are your organization's strengths and priorities?",
+      "placeholder-organizationStrengthPriorityProject": "Enter what are your organization's strengths and priorities?",
+      "label-fundraisingPlanProject": "What is your fundraising plan for this project? (Optional)",
+      "placeholder-fundraisingPlanProject": "Enter what is your fundraising plan for this project? (Optional)",
+      "label-additionalInformationProject": "Any additional information you'd like to share with us?",
+      "placeholder-additionalInformationProject": "Enter any additional information you'd like to share with us?"
+    },
+    "form-title3": "BUDGET",
+    "form-budget": {
+      "label-amountBudget": "Grant amount requested",
+      "placeholder-amountBudget": "Enter grant amount requested",
+      "label-totalBudget": "Total project budget",
+      "placeholder-totalBudget": "Enter total project budget"
+    },
+    "form-title4": "ADDITIONAL MATERIALS (OPTIONAL)",
+    "form-title5": "REQUIRED PROJECT UPDATES",
+    "btnLabel": "Submit",
     "or": "Or contact us at",
     "name": "CC Foundation",
-    "address": "65 Cam Hoi Street, Dong Mac Ward, Hai Ba Trung District, Hanoi"
+    "address": "65 Cam Hoi Street, Dong Mac Ward, Hai Ba Trung District, Hanoi",
+    "additional-materials": "If desired, you may also submit copies of supporting materials such as supporting letters from other agencies or persons, or resumes of project personnel. Please email supporting materials to:",
+    "required-project-updates": "If your proposal is approved, you will be required to provide regular updates (including narratives, photos, videos) on status of your project.  A brief final report also will be required where you summarize the accomplishments of your work and its impact on the community.",
+    "label-accept": "Check the box below",
+    "label-checkbox-accept": "I agree to provide required project updates.",
+    "typing-required": "You must enter information",
+    "select-required": "You must checked"
   }
 }

@@ -1,0 +1,12 @@
+.inputWrapper {
+  display: grid;
+  grid-template-columns: auto auto;
+  width: fit-content;
+  gap: 4px;
+  align-items: center;
+}
+
+.inputWrapper label {
+  margin: 0;
+  color: #000;
+}

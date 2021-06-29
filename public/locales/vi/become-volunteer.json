@@ -1,11 +1,43 @@
 {
   "head-title": "Trở thành Tình nguyện viên",
+  "sign-up-success": "Đăng ký thành công",
   "slogan": {
     "title": "Trở thành Tình nguyện viên"
   },
   "contact": {
-    "title": "Bạn muốn cống hiến cho sự phát triển bền vững của cộng đồng và trở thành tình nguyện viên của CC Foundation, xin vui lòng liên hệ",
+    "title": "Bạn muốn cống hiến cho sự phát triển bền vững của cộng đồng và trở thành tình nguyện viên của CC Foundation, xin vui lòng điền vào biểu dưới đây:",
+    "form-title": "ĐĂNG KÝ TÌNH NGUYỆN VIÊN",
+    "form-subtitle": "(* Thông tin bắt buộc cần điền)",
+    "form-sub1": "1. Thông tin cá nhân:",
+    "form-register": {
+      "label-nameRegister": "Họ và tên",
+      "placeholder-nameRegister": "Nhập họ và tên",
+      "label-addressRegister": "Địa chỉ",
+      "placeholder-addressRegister": "Nhập địa chỉ",
+      "label-emailRegister": "Email",
+      "placeholder-emailRegister": "Nhập email",
+      "label-phoneRegister": "Số điện thoại",
+      "placeholder-phoneRegister": "Nhập số điện thoại",
+      "label-birthdayRegister": "Ngày sinh",
+      "placeholder-birthdayRegister": "Nhập ngày sinh",
+      "label-genderRegister": "Giới tính",
+      "label-genderRegister-option1": "Nam",
+      "label-genderRegister-option2": "Nữ",
+      "label-hearAboutUsRegister": "Bạn biết đến CC Foundation như thế nào?",
+      "placeholder-hearAboutUsRegister": "Nhập bạn biết đến CC Foundation như thế nào?"
+    },
+    "form-sub2": "2. Chương trình Tình nguyện viên:",
+    "form-program": {
+      "label-categoryApplyProgram": "Lĩnh vực bạn muốn đóng góp?",
+      "placeholder-categoryApplyProgram": "Nhập lĩnh vực bạn muốn đóng góp?",
+      "label-workedProgram": "Bạn đã bao giờ là tình nguyện viên? Nếu có, vui lòng chia sẻ khi nào, ở đâu và với tổ chức nào?",
+      "placeholder-workedProgram": "Nhập ban đã bao giờ là tình nguyện viên? Nếu có, vui lòng chia sẻ khi nào, ở đâu và với tổ chức nào?",
+      "label-timeProgram": "Thời gian tốt nhất bạn có thể đóng góp cho CC Foundation với vai trò Tình nguyện viên?",
+      "placeholder-timeProgram": "Nhập thời gian tốt nhất bạn có thể đóng góp cho CC Foundation với vai trò Tình nguyện viên?"
+    },
+    "btnLabel": "Gửi",
     "name": "CC Foundation",
-    "address": "65 Cảm Hội, phường Đống Mác, quận Hai Bà Trưng, Hà Nội"
+    "address": "65 Cảm Hội, phường Đống Mác, quận Hai Bà Trưng, Hà Nội",
+    "typing-required": "Thông tin bắt buộc phải điền"
   }
 }

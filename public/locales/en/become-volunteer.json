@@ -1,11 +1,43 @@
 {
   "head-title": "Become a volunteer",
+  "sign-up-success": "Sign up success",
   "slogan": {
     "title": "Become a volunteer"
   },
   "contact": {
-    "title": "If you wish to contribute your time and efforts for the sustainable development of our communities and become a volunteer of CC Foundation, please contact us at",
+    "title": "If you wish to contribute your time and efforts for the sustainable development of our communities and become a volunteer of CC Foundation, please fill in the form below:",
+    "form-title": "VOLUNTEER REGISTRATION",
+    "form-subtitle": "(* Indicates required field)",
+    "form-sub1": "1. Personal details:",
+    "form-register": {
+      "label-nameRegister": "Name in full",
+      "placeholder-nameRegister": "Enter name in full",
+      "label-addressRegister": "Address",
+      "placeholder-addressRegister": "Enter address",
+      "label-emailRegister": "Email",
+      "placeholder-emailRegister": "Enter email",
+      "label-phoneRegister": "Phone number",
+      "placeholder-phoneRegister": "Enter phone number",
+      "label-birthdayRegister": "Date of birth",
+      "placeholder-birthdayRegister": "Enter date of birth",
+      "label-genderRegister": "Gender",
+      "label-genderRegister-option1": "Male",
+      "label-genderRegister-option2": "Female",
+      "label-hearAboutUsRegister": "How did you hear about us?",
+      "placeholder-hearAboutUsRegister": "Enter how did you hear about us?"
+    },
+    "form-sub2": "2. Volunteer program",
+    "form-program": {
+      "label-categoryApplyProgram": "What volunteer category are you applying for?",
+      "placeholder-categoryApplyProgram": "Enter what volunteer category are you applying for?",
+      "label-workedProgram": "Have you volunteered before? If yes, when, where and with whom?",
+      "placeholder-workedProgram": "Enter have you volunteered before? If yes, when, where and with whom?",
+      "label-timeProgram": "Best time for you to volunteer with us",
+      "placeholder-timeProgram": "Enter best time for you to volunteer with us"
+    },
     "name": "CC Foundation",
-    "address": "65 Cam Hoi Street, Dong Mac Ward, Hai Ba Trung District, Hanoi"
+    "btnLabel": "Submit",
+    "address": "65 Cam Hoi Street, Dong Mac Ward, Hai Ba Trung District, Hanoi",
+    "typing-required": "You must enter information"
   }
 }
