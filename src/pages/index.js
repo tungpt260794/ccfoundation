@@ -135,14 +135,14 @@ const Home = ({ blogsDataServer }) => {
             className="row"
             style={{ display: "flex", justifyContent: "center" }}
           >
-            <div className="col-xl-3 col-md-4">
+            <div className="col-xl-2 col-md-3">
               <PersonArea
                 imgUrl="/images/bach-ngoc-an.png"
                 name={t("persons.name1")}
                 position={t("persons.position1")}
               />
             </div>
-            <div className="col-xl-3 col-md-4">
+            <div className="col-xl-2 col-md-3">
               <PersonArea
                 imgUrl="/images/vo-hang-phuong.png"
                 name={t("persons.name2")}
@@ -214,6 +214,7 @@ export const getStaticProps = async (context) => {
         "header",
         "footer",
         "home",
+        "blogs",
       ])),
     },
   };
