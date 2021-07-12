@@ -816,7 +816,8 @@ h3 {
   position: relative;
   z-index: 99;
   padding-bottom: 115px;
-  margin-top: -130px;
+  /* margin-top: -130px; */
+  margin-top: 0;
 }
 @media (max-width: 767px) {
   .causes_area {

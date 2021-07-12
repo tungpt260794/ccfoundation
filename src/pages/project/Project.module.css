@@ -1,3 +1,7 @@
+.projectContent {
+  word-break: break-word;
+}
+
 .projectContent img {
   width: 100%;
 }

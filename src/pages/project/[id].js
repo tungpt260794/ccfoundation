@@ -66,7 +66,7 @@ const Project = ({ projectDataServer, localizations }) => {
         backgroundUrl="/images/projects-complete-banner.png"
       />
 
-      <div className="container" style={{ marginTop: 60 }}>
+      <div className="container">
         {loading && <Loader />}
         <DonateBig
           title={projectData && projectData.data && projectData.data.title}
