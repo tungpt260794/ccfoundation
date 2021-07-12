@@ -73,13 +73,14 @@ const Project = ({ projectDataServer, localizations }) => {
           content={
             <div className={styles.projectContent}>
               <ReactMarkdown>
-                {projectData &&
-                  projectData.data &&
-                  projectData.data.content &&
-                  projectData.data.content.replace(
-                    "](",
-                    `](${process.env.NEXT_PUBLIC_STRAPI_DOMAIN_API}`
-                  )}
+                {
+                  projectData && projectData.data && projectData.data.content
+                  // &&
+                  // projectData.data.content.replace(
+                  //   "](",
+                  //   `](${process.env.NEXT_PUBLIC_STRAPI_DOMAIN_API}`
+                  // )
+                }
               </ReactMarkdown>
             </div>
           }
