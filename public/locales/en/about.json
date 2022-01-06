@@ -11,8 +11,10 @@
   },
   "persons": {
     "name1": "Mr. Bach An",
-    "position1": "",
+    "position1": "Master in IT & BA - IT Senior Advisor",
     "name2": "Mrs. Vo Hang Phuong",
-    "position2": ""
+    "position2": "Master in Banking & Finance - Community Project Appraisal Senior Advisor",
+    "name3": "Mr. Ganga Wanduragala",
+    "position3": "Project Management Senior Advisor"
   }
 }

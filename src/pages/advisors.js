@@ -58,6 +58,13 @@ const Advisors = () => {
                 position={t("persons.position3")}
               />
             </div>
+            <div className="col-xl-2 col-md-3">
+              <PersonArea
+                imgUrl="/images/le-hong-hien.png"
+                name={t("persons.name4")}
+                position={t("persons.position4")}
+              />
+            </div>
           </div>
         </div>
       </div>

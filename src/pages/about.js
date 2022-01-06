@@ -61,18 +61,32 @@ const About = () => {
             className="row"
             style={{ display: "flex", justifyContent: "center" }}
           >
-            <div className="col-xl-3 col-md-4">
+            <div className="col-xl-2 col-md-3">
               <PersonArea
                 imgUrl="/images/bach-ngoc-an.png"
                 name={t("persons.name1")}
                 position={t("persons.position1")}
               />
             </div>
-            <div className="col-xl-3 col-md-4">
+            <div className="col-xl-2 col-md-3">
               <PersonArea
                 imgUrl="/images/vo-hang-phuong.png"
                 name={t("persons.name2")}
                 position={t("persons.position2")}
+              />
+            </div>
+            <div className="col-xl-2 col-md-3">
+              <PersonArea
+                imgUrl="/images/ganga-wanduragala.png"
+                name={t("persons.name3")}
+                position={t("persons.position3")}
+              />
+            </div>
+            <div className="col-xl-2 col-md-3">
+              <PersonArea
+                imgUrl="/images/le-hong-hien.png"
+                name={t("persons.name4")}
+                position={t("persons.position4")}
               />
             </div>
           </div>
